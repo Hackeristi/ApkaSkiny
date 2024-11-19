@@ -1,0 +1,10 @@
+﻿@model List<Skin>
+
+<h2>Lista Skinów</h2>
+
+<ul>
+    @foreach (var skin in Model)
+    {
+        <li>@skin.Name - @skin.WeaponType - $@skin.Price</li>
+    }
+</ul>
