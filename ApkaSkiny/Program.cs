@@ -1,14 +1,15 @@
-﻿using ApkaSkiny.Models;
+﻿using System.Windows;
+using ApkaSkiny.Models;
+using ApkaSkiny;
 
-
-namespace ApkaSkiny
+class Program
 {
-    class Program
+    [STAThread]
+    static void Main(string[] args)
     {
-        static void Main(string[] args)
-        {
-            var controller = new Controller();
-            controller.Run();
-        }
+        var app = new Application();
+        var controller = new Controller(new GUIUI());  // Assuming GUIUI is your UI implementation
+        var window = new MainWindow(controller);  // Pass the controller to MainWindow
+        app.Run(window);
     }
 }

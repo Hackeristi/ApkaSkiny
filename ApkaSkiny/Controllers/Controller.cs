@@ -8,15 +8,15 @@ using global::ApkaSkiny.Views;
         public class Controller
         {
             private readonly SkinRepository _repository;
-            private readonly SkinView _view;
+        private readonly IUI _view;
 
-            public Controller()
-            {
-                _repository = new SkinRepository();
-                _view = new SkinView();
-            }
+        public Controller(IUI view)
+        {
+            _repository = new SkinRepository();
+            _view = view;
+        }
 
-            public void Run()
+        public void Run()
             {
                 _view.ShowTitle("Przeglądarka skinów CS2");
                 ShowAsciiAnimation();
@@ -25,7 +25,7 @@ using global::ApkaSkiny.Views;
 
                 while (isRunning)
                 {
-                    var choice = _view.GetSelection("[magenta]Wybierz opcję:[/]", new List<string>
+                    var choice = _view.GetSelection("[#FFD6E9]Wybierz opcję:[/]", new List<string>
 
                 {
                     "1. Wyświetl wszystkie skiny",
@@ -105,19 +105,19 @@ using global::ApkaSkiny.Views;
                 }
             }
 
-            private void ShowAsciiAnimation()
+        public void ShowAsciiAnimation()
             {
                 string[] animationFrames = new string[] { "ŁADOWANIE", "ŁADOWANIE.", "ŁADOWANIE..", "ŁADOWANIE..." };
                 _view.ShowAsciiAnimation(animationFrames);
             }
 
-            private void PrintSkinsTable(IEnumerable<Skin> skins)
+        public void PrintSkinsTable(IEnumerable<Skin> skins)
             {
                 AnsiConsole.Clear();
                 _view.PrintSkinsTable(skins);
             }
 
-            private void DisplaySkins()
+        public void DisplaySkins()
             {
                 AnsiConsole.Clear();
                 _view.ShowMessage("[#FFD6E9]Ładowanie wszystkich skinów...[/]");
@@ -130,7 +130,7 @@ using global::ApkaSkiny.Views;
                 PrintSkinsTable(skins);
             }
 
-            private void DisplaySkinsSortedByPrice()
+        public void DisplaySkinsSortedByPrice()
             {
                 AnsiConsole.Clear();
                 _view.ShowMessage("[#FFD6E9]Sortowanie skinów po cenie...[/]");
@@ -138,7 +138,7 @@ using global::ApkaSkiny.Views;
                 PrintSkinsTable(skins);
             }
 
-            private void DisplaySkinsByCollection()
+        public void DisplaySkinsByCollection()
             {
                 AnsiConsole.Clear();
                 var collections = _repository.GetSkins().Select(s => s.Collection).Distinct().ToList();
@@ -147,7 +147,7 @@ using global::ApkaSkiny.Views;
                 PrintSkinsTable(skins);
             }
 
-            private void DisplaySkinsByWeaponType()
+        public void DisplaySkinsByWeaponType()
             {
                 AnsiConsole.Clear();
                 var weaponTypes = _repository.GetSkins().Select(s => s.WeaponType).Distinct().ToList();
@@ -156,39 +156,39 @@ using global::ApkaSkiny.Views;
                 PrintSkinsTable(skins);
             }
 
-       private void DisplaySkinsByChosenPrice()
-{
-    var allSkins = _repository.GetSkins();
+        public void DisplaySkinsByChosenPrice()
+            {
+                var allSkins = _repository.GetSkins();
 
-    var minPriceChoice = _view.GetUserInput("Podaj minimalną cenę (pozostaw puste, aby nie filtrować):");
-    decimal? minPrice = string.IsNullOrEmpty(minPriceChoice) ? (decimal?)null : decimal.Parse(minPriceChoice);
+                var minPriceChoice = _view.GetUserInput("Podaj minimalną cenę (pozostaw puste, aby nie filtrować):");
+                decimal? minPrice = string.IsNullOrEmpty(minPriceChoice) ? (decimal?)null : decimal.Parse(minPriceChoice);
 
-    var maxPriceChoice = _view.GetUserInput("Podaj maksymalną cenę (pozostaw puste, aby nie filtrować):");
-    decimal? maxPrice = string.IsNullOrEmpty(maxPriceChoice) ? (decimal?)null : decimal.Parse(maxPriceChoice);
+                var maxPriceChoice = _view.GetUserInput("Podaj maksymalną cenę (pozostaw puste, aby nie filtrować):");
+                decimal? maxPrice = string.IsNullOrEmpty(maxPriceChoice) ? (decimal?)null : decimal.Parse(maxPriceChoice);
 
-    var filteredSkins = allSkins
-        .Where(s =>
-        {
-            bool withinMinPrice = !minPrice.HasValue || s.Price >= minPrice.Value;
-            bool withinMaxPrice = !maxPrice.HasValue || s.Price <= maxPrice.Value;
-            return withinMinPrice && withinMaxPrice;
-        })
-        .OrderBy(s => minPrice.HasValue ? s.Price : (decimal?)null)
-        .ThenByDescending(s => !minPrice.HasValue ? s.Price : (decimal?)null)
-        .ToList();
+                var filteredSkins = allSkins
+                .Where(s =>
+                {
+                    bool withinMinPrice = !minPrice.HasValue || s.Price >= minPrice.Value;
+                    bool withinMaxPrice = !maxPrice.HasValue || s.Price <= maxPrice.Value;
+                    return withinMinPrice && withinMaxPrice;
+                })
+                .OrderBy(s => minPrice.HasValue ? s.Price : (decimal?)null)
+                .ThenByDescending(s => !minPrice.HasValue ? s.Price : (decimal?)null)
+                .ToList();
 
-    if (filteredSkins.Any())
-    {
-        PrintSkinsTable(filteredSkins);
-    }
-    else
-    {
-        _view.ShowMessage("[#D30E92]Brak skinów w wybranym zakresie cenowym![/]");
-    }
-}
+                if (filteredSkins.Any())
+                {
+                    PrintSkinsTable(filteredSkins);
+                }
+                else
+                {
+                    _view.ShowMessage("[#D30E92]Brak skinów w wybranym zakresie cenowym![/]");
+                }
+            }
 
 
-    private void DisplayFavoriteSkins()
+        public void DisplayFavoriteSkins()
             {
                 AnsiConsole.Clear();
                 _view.ShowMessage("[#FFD6E9]Wyświetlanie ulubionych skinów...[/]");
@@ -203,7 +203,7 @@ using global::ApkaSkiny.Views;
                 }
             }
 
-        private void AddNewSkin()
+        public void AddNewSkin()
         {
             AnsiConsole.Clear();
             _view.ShowMessage("[#FFD6E9]Dodawanie nowego skina...[/]");
@@ -263,7 +263,7 @@ using global::ApkaSkiny.Views;
                     break;
                 }
 
-                _view.ShowMessage($"[#D30E92]Strona \"{side}\" nie pasuje do typu broni \"{weaponType}\". Spróbuj ponownie!");
+                _view.ShowMessage($"[#D30E92]Strona \"{side}\" nie pasuje do typu broni \"{weaponType}\". Spróbuj ponownie![/]");
                 attemptCount++;
             }
 
@@ -282,19 +282,19 @@ using global::ApkaSkiny.Views;
         }
 
 
-        private void WaitForUserToContinue()
+        public void WaitForUserToContinue()
         {
             AnsiConsole.MarkupLine("[grey][[INFO]] Naciśnij Enter, aby kontynuować...[/]");
             Console.ReadLine();
         }
 
-        private bool IsValidSideForWeaponType(string weaponType, string side)
+        public bool IsValidSideForWeaponType(string weaponType, string side)
         {
             return _repository.WeaponInfoMap.TryGetValue(weaponType, out var weaponInfo) &&
                    (weaponInfo.Side == side || weaponInfo.Side == "Obie");
         }
 
-        private string AssignDefaultSideForWeaponType(string weaponType)
+        public string AssignDefaultSideForWeaponType(string weaponType)
         {
             if (_repository.WeaponInfoMap.TryGetValue(weaponType, out var weaponInfo))
             {
@@ -303,7 +303,7 @@ using global::ApkaSkiny.Views;
             return "Obie";
         }
 
-        private decimal GetValidPriceFromUser()
+        public decimal GetValidPriceFromUser()
         {
             decimal price = 1;
             bool isValidPrice = false;
@@ -323,7 +323,7 @@ using global::ApkaSkiny.Views;
         }
 
 
-        private string GetValidInputFromUser(string inputType, List<string> validOptions)
+        public string GetValidInputFromUser(string inputType, List<string> validOptions)
         {
             int attemptCount = 0;
             string userInput = string.Empty;
@@ -355,7 +355,7 @@ using global::ApkaSkiny.Views;
 
 
 
-        private string MatchWeaponType(string input, List<string> availableWeaponTypes)
+        public string MatchWeaponType(string input, List<string> availableWeaponTypes)
         {
             var match = availableWeaponTypes.FirstOrDefault(wt =>
                 string.Equals(wt, input, StringComparison.OrdinalIgnoreCase));
@@ -363,14 +363,12 @@ using global::ApkaSkiny.Views;
             return match ?? CapitalizeFirstLetter(input); 
         }
 
-
-
-        private string CapitalizeFirstLetter(string input)
+        public string CapitalizeFirstLetter(string input)
             {
                 return string.IsNullOrWhiteSpace(input) ? input : char.ToUpper(input[0]) + input.Substring(1).ToLower();
             }
 
-        private void AddSkinToFavorites()
+        public void AddSkinToFavorites()
         {
             AnsiConsole.Clear();
             var skins = _repository.GetSkins();
@@ -400,7 +398,7 @@ using global::ApkaSkiny.Views;
             }
         }
 
-        private void SearchSkinsByName()
+        public void SearchSkinsByName()
         {
             AnsiConsole.Clear();
             var query = AnsiConsole.Ask<string>("Wprowadź fragment nazwy skina:");
@@ -416,7 +414,7 @@ using global::ApkaSkiny.Views;
             }
         }
 
-        private void DisplayStatistics()
+        public void DisplayStatistics()
         {
             AnsiConsole.Clear();
             var skins = _repository.GetSkins();
@@ -504,9 +502,6 @@ using global::ApkaSkiny.Views;
             {
                 AnsiConsole.MarkupLine("[#D30E92]Nie znaleziono wybranego skina w ulubionych.[/]");
             }
-
         }
-
-
     }
 }

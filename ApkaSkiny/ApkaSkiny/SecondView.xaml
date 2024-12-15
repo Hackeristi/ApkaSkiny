@@ -1,0 +1,102 @@
+﻿<Window x:Class="ApkaSkiny.SecondView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Skin Management" Height="750" Width="800">
+	<Window.Resources>
+		<!-- Defining colors for styling -->
+		<SolidColorBrush x:Key="PrimaryColor" Color="#D30E92"/>
+		<SolidColorBrush x:Key="SecondaryColor" Color="#FFC0EE"/>
+		<SolidColorBrush x:Key="ButtonHoverColor" Color="#DB76BC"/>
+		<SolidColorBrush x:Key="ButtonBackgroundColor" Color="#C79274"/>
+		<SolidColorBrush x:Key="TextColor" Color="#946656"/>
+	</Window.Resources>
+
+	<Grid Background="#181818" Margin="10">
+		<!-- Define rows and columns for the grid layout -->
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+		</Grid.RowDefinitions>
+
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="Auto"/>
+			<ColumnDefinition Width="Auto"/>
+		</Grid.ColumnDefinitions>
+
+		<!-- Displaying all skins button -->
+		<Button Name="DisplayAllSkinsButton" Content="1. Wyświetl wszystkie skiny" VerticalAlignment="Top" Width="200" Height="40"
+                Background="{StaticResource ButtonBackgroundColor}" Foreground="White" BorderBrush="{StaticResource PrimaryColor}" BorderThickness="2"
+                MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave" Click="OnDisplayAllSkins" Grid.Row="0" Grid.Column="0" Margin="10,10,10,10"/>
+
+		<!-- Display favorite skins button -->
+		<Button Name="DisplayFavoriteSkinsButton" Content="2. Wyświetl ulubione skiny" VerticalAlignment="Top" Width="200" Height="40"
+                Background="{StaticResource ButtonBackgroundColor}" Foreground="White" BorderBrush="{StaticResource PrimaryColor}" BorderThickness="2"
+                MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave" Click="OnDisplayFavoriteSkins" Grid.Row="1" Grid.Column="0" Margin="10,0,10,10"/>
+
+		<!-- Add new skin button -->
+		<Button Name="AddNewSkinButton" Content="3. Dodaj nowy skin" VerticalAlignment="Top" Width="200" Height="40"
+                Background="{StaticResource ButtonBackgroundColor}" Foreground="White" BorderBrush="{StaticResource PrimaryColor}" BorderThickness="2"
+                MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave" Click="OnAddNewSkin" Grid.Row="2" Grid.Column="0" Margin="10,0,10,10"/>
+
+		<!-- Remove skin button -->
+		<Button Name="RemoveSkinButton" Content="4. Usuń skin" VerticalAlignment="Top" Width="200" Height="40"
+                Background="{StaticResource ButtonBackgroundColor}" Foreground="White" BorderBrush="{StaticResource PrimaryColor}" BorderThickness="2"
+                MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave" Click="OnRemoveSkin" Grid.Row="3" Grid.Column="0" Margin="10,0,10,10"/>
+
+		<!-- Add to favorites button -->
+		<Button Name="AddSkinToFavoritesButton" Content="5. Dodaj skin do ulubionych" VerticalAlignment="Top" Width="200" Height="40"
+                Background="{StaticResource ButtonBackgroundColor}" Foreground="White" BorderBrush="{StaticResource PrimaryColor}" BorderThickness="2"
+                MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave" Click="OnAddSkinToFavorites" Grid.Row="4" Grid.Column="0" Margin="10,0,10,10"/>
+
+		<!-- Remove from favorites button -->
+		<Button Name="RemoveSkinFromFavoritesButton" Content="6. Usuń skin z ulubionych" VerticalAlignment="Top" Width="200" Height="40"
+                Background="{StaticResource ButtonBackgroundColor}" Foreground="White" BorderBrush="{StaticResource PrimaryColor}" BorderThickness="2"
+                MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave" Click="OnRemoveSkinFromFavorites" Grid.Row="5" Grid.Column="0" Margin="10,0,10,10"/>
+
+		<!-- Sort by price button -->
+		<Button Name="SortByPriceButton" Content="7. Sortuj po cenie" VerticalAlignment="Top" Width="200" Height="40"
+                Background="{StaticResource ButtonBackgroundColor}" Foreground="White" BorderBrush="{StaticResource PrimaryColor}" BorderThickness="2"
+                MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave" Click="OnSortByPrice" Grid.Row="6" Grid.Column="0" Margin="10,0,10,10"/>
+
+		<!-- Sort by collection button -->
+		<Button Name="SortByCollectionButton" Content="8. Sortuj po kolekcji" VerticalAlignment="Top" Width="200" Height="40"
+                Background="{StaticResource ButtonBackgroundColor}" Foreground="White" BorderBrush="{StaticResource PrimaryColor}" BorderThickness="2"
+                MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave" Click="OnSortByCollection" Grid.Row="7" Grid.Column="0" Margin="10,0,10,10"/>
+
+		<!-- Sort by weapon type button -->
+		<Button Name="SortByWeaponTypeButton" Content="9. Sortuj po typie broni" VerticalAlignment="Top" Width="200" Height="40"
+                Background="{StaticResource ButtonBackgroundColor}" Foreground="White" BorderBrush="{StaticResource PrimaryColor}" BorderThickness="2"
+                MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave" Click="OnSortByWeaponType" Grid.Row="8" Grid.Column="0" Margin="10,0,10,10"/>
+
+		<!-- Sort by chosen price button -->
+		<Button Name="SortByChosenPriceButton" Content="10. Sortuj po wybranej cenie" VerticalAlignment="Top" Width="200" Height="40"
+                Background="{StaticResource ButtonBackgroundColor}" Foreground="White" BorderBrush="{StaticResource PrimaryColor}" BorderThickness="2"
+                MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave" Click="OnSortByChosenPrice" Grid.Row="9" Grid.Column="0" Margin="10,0,10,10"/>
+
+		<!-- Search by name button -->
+		<Button Name="SearchByNameButton" Content="11. Wyszukaj skin po nazwie" VerticalAlignment="Top" Width="200" Height="40"
+                Background="{StaticResource ButtonBackgroundColor}" Foreground="White" BorderBrush="{StaticResource PrimaryColor}" BorderThickness="2"
+                MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave" Click="OnSearchByName" Grid.Row="10" Grid.Column="0" Margin="10,0,10,10"/>
+
+		<!-- Show statistics button -->
+		<Button Name="ShowStatisticsButton" Content="12. Statystyki" VerticalAlignment="Top" Width="200" Height="40"
+                Background="{StaticResource ButtonBackgroundColor}" Foreground="White" BorderBrush="{StaticResource PrimaryColor}" BorderThickness="2"
+                MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave" Click="OnShowStatistics" Grid.Row="11" Grid.Column="0" Margin="10,0,10,10"/>
+
+		<!-- Exit button -->
+		<Button Name="ExitButton" Content="13. Wyjdź z aplikacji" VerticalAlignment="Top" Width="200" Height="40"
+                Background="{StaticResource ButtonBackgroundColor}" Foreground="White" BorderBrush="{StaticResource PrimaryColor}" BorderThickness="2"
+                MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave" Click="OnExitApp" Grid.Row="12" Grid.Column="0" Margin="10,0,10,10"/>
+	</Grid>
+</Window>

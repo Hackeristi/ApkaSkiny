@@ -18,7 +18,7 @@ public class Skin
         Price = price;
         Side = side;
         WeaponCategory = weaponCategory;
-        IsFavorite = isFavorite;
+        IsFavorite = false;
     }
 
     public override string ToString()
