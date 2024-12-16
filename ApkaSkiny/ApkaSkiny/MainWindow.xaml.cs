@@ -6,6 +6,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using Microsoft.VisualBasic.FileIO;
 
 namespace ApkaSkiny
 {
@@ -19,6 +21,9 @@ namespace ApkaSkiny
             _controller = controller;
             ShowAsciiArt();
             ShowTitle("Przegladarka skinow CS2");
+            ShowImage();
+            ShowText();
+
         }
 
         private void Button_MouseEnter(object sender, MouseEventArgs e)
@@ -80,14 +85,31 @@ namespace ApkaSkiny
                                      #@@@@%-                                              
 ";
             // Przypisanie ASCII art do TextBlock w WPF
-            TextBlockAsciiArt.Text = asciiArt;
+            //TextBlockAsciiArt.Text = asciiArt;
+        }
+
+        public void ShowImage()
+        {
+            // Ścieżka do obrazu (możesz podać pełną ścieżkę lub ścieżkę względną)
+            string imagePath = @"C:\Users\sasza\source\repos\ApkaSkiny\c5575d9f-5d14-4e25-b537-0c566e1b8b83-front3x.jpg";
+
+            // Ustawienie źródła obrazu
+            ImageControl.Source = new BitmapImage(new Uri(imagePath, UriKind.Absolute));
+        }
+        public void ShowText()
+        {
+            // Ścieżka do obrazu (możesz ustawić ścieżkę dynamicznie, np. na podstawie nazwy tytułu)
+            string textimagePath = @"C:\Users\sasza\source\repos\ApkaSkiny\text-to-image.jpg"; // Zmień ścieżkę na odpowiednią
+
+            // Ustawienie źródła obrazu
+            TextImageControl.Source = new BitmapImage(new Uri(textimagePath, UriKind.Absolute));
         }
 
         public void ShowTitle(string title)
         {
             string asciiTitle = FiggleFonts.Standard.Render(title);
             // Wyświetlanie tytułu w TextBlock
-            TitleTextBlock.Text = asciiTitle;
+            //TitleTextBlock.Text = asciiTitle;
         }
     }
 }

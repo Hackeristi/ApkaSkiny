@@ -1,0 +1,31 @@
+﻿<Window x:Class="ApkaSkiny.SelectSkinDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Wybierz Skin" Height="300" Width="400">
+	<Window.Resources>
+		<!-- Kolory do stylizacji -->
+		<SolidColorBrush x:Key="PrimaryColor" Color="#D30E92"/>
+		<SolidColorBrush x:Key="SecondaryColor" Color="#FFC0EE"/>
+		<SolidColorBrush x:Key="ButtonHoverColor" Color="#FFC0EE"/>
+		<SolidColorBrush x:Key="ButtonBackgroundColor" Color="#181818"/>
+		<SolidColorBrush x:Key="TextColor" Color="#946656"/>
+	</Window.Resources>
+
+	<Grid Background="#181818" Margin="10">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="Auto"/>
+		</Grid.RowDefinitions>
+
+		<!-- Lista wyboru skinów -->
+		<ListBox Name="SkinListBox" Margin="5" Background="{StaticResource SecondaryColor}" Foreground="Black" FontSize="16"
+				 BorderBrush="{StaticResource PrimaryColor}" BorderThickness="2" />
+
+
+		<!-- Przycisk potwierdzenia wyboru -->
+		<Button Content="OK" Width="100" Height="40" HorizontalAlignment="Center" Grid.Row="1" Margin="5"
+                Background="{StaticResource ButtonBackgroundColor}" Foreground="White" FontSize="16"
+                BorderBrush="{StaticResource PrimaryColor}" BorderThickness="2"
+                MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave" Click="OnOkButtonClick"/>
+	</Grid>
+</Window>

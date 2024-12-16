@@ -34,6 +34,12 @@ namespace ApkaSkiny
         {
             _viewModel.DisplayFavoriteSkinsAsync();  // Wywołanie metody z ViewModel
         }
+        private async void OnDisplayStatistics(object sender, RoutedEventArgs e)
+        {
+            // Ensure you're calling the method to update the statistics
+            await Task.Run(() => _viewModel.DisplayStatistics());
+        }
+
 
         // Sortowanie po cenie
         private void OnSortByPrice(object sender, RoutedEventArgs e)
@@ -288,6 +294,144 @@ namespace ApkaSkiny
             _viewModel.AddNewSkin(name, collection, weaponType, price, side, weaponCategory);
         }
 
+        private async void OnRemoveSkin(object sender, RoutedEventArgs e)
+        {
+            // Synchronizuj dane w ViewModel
+            await _viewModel.DisplaySkinsAsync(); // Załaduj skórki do ViewModel, jeśli jeszcze nie są załadowane
+
+            // Pobierz wszystkie skiny z ViewModel
+            var skins = _viewModel.Skins;
+
+            // Sprawdź, czy lista skinów nie jest pusta
+            if (!skins.Any())
+            {
+                MessageBox.Show("Brak skórek do usunięcia!", "Informacja", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+
+            // Przygotowanie listy wyboru w formacie "Name (WeaponType)"
+            var skinChoices = skins.Select(s => $"{s.Name} ({s.WeaponType})").ToList();
+
+            // Wywołanie okna dialogowego z wyborem skinu
+            var dialog = new SelectSkinDialog("Wybierz skin do usunięcia:", skinChoices);
+            if (dialog.ShowDialog() == true)
+            {
+                // Rozdzielenie nazwy i typu broni
+                var selectedSkinData = dialog.SelectedSkin?.Split('(');
+                if (selectedSkinData == null || selectedSkinData.Length < 2)
+                {
+                    MessageBox.Show("Niepoprawny wybór skina!", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
+                var selectedSkinName = selectedSkinData[0].Trim();
+
+                // Znalezienie wybranego skina
+                var skinToRemove = skins.FirstOrDefault(s => s.Name.Equals(selectedSkinName, StringComparison.OrdinalIgnoreCase));
+                if (skinToRemove != null)
+                {
+                    _viewModel.RemoveSkin(skinToRemove); // Usunięcie z ViewModel
+                    MessageBox.Show($"Skin \"{skinToRemove.Name}\" został usunięty.", "Sukces", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                else
+                {
+                    MessageBox.Show("Nie znaleziono wybranego skina do usunięcia.", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
+        private async void OnAddSkinToFavorites(object sender, RoutedEventArgs e)
+        {
+            // Synchronizuj dane w ViewModel
+            await _viewModel.DisplaySkinsAsync(); // Załaduj skórki do ViewModel, jeśli jeszcze nie są załadowane
+
+            // Pobierz wszystkie skiny z ViewModel
+            var skins = _viewModel.Skins;
+
+            // Sprawdź, czy lista skinów nie jest pusta
+            if (!skins.Any())
+            {
+                MessageBox.Show("Brak skórek do dodania do ulubionych!", "Informacja", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+
+            // Przygotowanie listy wyboru w formacie "Name (WeaponType)"
+            var skinChoices = skins.Select(s => $"{s.Name} ({s.WeaponType})").ToList();
+
+            // Wywołanie okna dialogowego z wyborem skinu
+            var dialog = new SelectSkinDialog("Wybierz skin do dodania do ulubionych:", skinChoices);
+            if (dialog.ShowDialog() == true)
+            {
+                // Rozdzielenie nazwy i typu broni
+                var selectedSkinData = dialog.SelectedSkin?.Split('(');
+                if (selectedSkinData == null || selectedSkinData.Length < 2)
+                {
+                    MessageBox.Show("Niepoprawny wybór skina!", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
+                var selectedSkinName = selectedSkinData[0].Trim();
+
+                // Znalezienie wybranego skina
+                var skinToAdd = skins.FirstOrDefault(s => s.Name.Equals(selectedSkinName, StringComparison.OrdinalIgnoreCase));
+                if (skinToAdd != null)
+                {
+                    // Dodaj skin do ulubionych
+                    _viewModel.AddSkinToFavorites(skinToAdd); // Dodanie skina do ulubionych w ViewModel
+                    MessageBox.Show($"Skin \"{skinToAdd.Name}\" został dodany do ulubionych.", "Sukces", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                else
+                {
+                    MessageBox.Show("Nie znaleziono wybranego skina do dodania do ulubionych.", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
+
+        private async void OnRemoveSkinFromFavorites(object sender, RoutedEventArgs e)
+        {
+            // Synchronizuj dane w ViewModel
+            await _viewModel.DisplayFavoriteSkinsAsync(); // Załaduj ulubione skórki do ViewModel, jeśli jeszcze nie są załadowane
+
+            // Pobierz wszystkie ulubione skiny z ViewModel
+            var favoriteSkins = _viewModel.Skins.Where(s => s.IsFavorite).ToList();
+
+            // Sprawdź, czy lista ulubionych skinów nie jest pusta
+            if (!favoriteSkins.Any())
+            {
+                MessageBox.Show("Brak ulubionych skórek do usunięcia!", "Informacja", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+
+            // Przygotowanie listy wyboru w formacie "Name (WeaponType)"
+            var skinChoices = favoriteSkins.Select(s => $"{s.Name} ({s.WeaponType})").ToList();
+
+            // Wywołanie okna dialogowego z wyborem skina
+            var dialog = new SelectSkinDialog("Wybierz skin do usunięcia z ulubionych:", skinChoices);
+            if (dialog.ShowDialog() == true)
+            {
+                // Rozdzielenie nazwy i typu broni
+                var selectedSkinData = dialog.SelectedSkin?.Split('(');
+                if (selectedSkinData == null || selectedSkinData.Length < 2)
+                {
+                    MessageBox.Show("Niepoprawny wybór skina!", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
+                var selectedSkinName = selectedSkinData[0].Trim();
+
+                // Znalezienie wybranego skina
+                var skinToRemove = favoriteSkins.FirstOrDefault(s => s.Name.Equals(selectedSkinName, StringComparison.OrdinalIgnoreCase));
+                if (skinToRemove != null)
+                {
+                    // Usuń skin z ulubionych
+                    _viewModel.RemoveSkinFromFavorites(skinToRemove); // Usunięcie skina z ulubionych w ViewModel
+                    MessageBox.Show($"Skin \"{skinToRemove.Name}\" został usunięty z ulubionych.", "Sukces", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                else
+                {
+                    MessageBox.Show("Nie znaleziono wybranego skina do usunięcia z ulubionych.", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
 
         // Zamykanie aplikacji
         private void OnExitApp(object sender, RoutedEventArgs e)

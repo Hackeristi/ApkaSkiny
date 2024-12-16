@@ -160,11 +160,11 @@ using global::ApkaSkiny.Views;
             {
                 var allSkins = _repository.GetSkins();
 
-var minPriceChoice = _view.GetUserInput("Podaj minimalną cenę (pozostaw puste, aby nie filtrować):", "Minimalna Cena");
-decimal? minPrice = string.IsNullOrEmpty(minPriceChoice) ? (decimal?)null : decimal.Parse(minPriceChoice);
+                var minPriceChoice = _view.GetUserInput("Podaj minimalną cenę (pozostaw puste, aby nie filtrować):", "Minimalna Cena");
+                decimal? minPrice = string.IsNullOrEmpty(minPriceChoice) ? (decimal?)null : decimal.Parse(minPriceChoice);
 
-var maxPriceChoice = _view.GetUserInput("Podaj maksymalną cenę (pozostaw puste, aby nie filtrować):", "Maksymalna Cena");
-decimal? maxPrice = string.IsNullOrEmpty(maxPriceChoice) ? (decimal?)null : decimal.Parse(maxPriceChoice);
+                var maxPriceChoice = _view.GetUserInput("Podaj maksymalną cenę (pozostaw puste, aby nie filtrować):", "Maksymalna Cena");
+                decimal? maxPrice = string.IsNullOrEmpty(maxPriceChoice) ? (decimal?)null : decimal.Parse(maxPriceChoice);
 
 
                 var filteredSkins = allSkins
@@ -187,7 +187,6 @@ decimal? maxPrice = string.IsNullOrEmpty(maxPriceChoice) ? (decimal?)null : deci
                     _view.ShowMessage("[#D30E92]Brak skinów w wybranym zakresie cenowym![/]");
                 }
             }
-
 
         public void DisplayFavoriteSkins()
             {
@@ -282,8 +281,6 @@ decimal? maxPrice = string.IsNullOrEmpty(maxPriceChoice) ? (decimal?)null : deci
             _view.ShowMessage($"[#FFD6E9]Dodano nowy skin: {name} w cenie ${price:F2}.[/]");
         }
 
-
-
         public void WaitForUserToContinue()
         {
             AnsiConsole.MarkupLine("[grey][[INFO]] Naciśnij Enter, aby kontynuować...[/]");
@@ -324,7 +321,6 @@ decimal? maxPrice = string.IsNullOrEmpty(maxPriceChoice) ? (decimal?)null : deci
             return price;
         }
 
-
         public string GetValidInputFromUser(string inputType, List<string> validOptions)
         {
             int attemptCount = 0;
@@ -354,8 +350,6 @@ decimal? maxPrice = string.IsNullOrEmpty(maxPriceChoice) ? (decimal?)null : deci
             }
             return userInput;
         }
-
-
 
         public string MatchWeaponType(string input, List<string> availableWeaponTypes)
         {
@@ -439,6 +433,7 @@ decimal? maxPrice = string.IsNullOrEmpty(maxPriceChoice) ? (decimal?)null : deci
 
             AnsiConsole.Write(table);
         }
+
         public void RemoveSkin()
         {
             AnsiConsole.Clear();

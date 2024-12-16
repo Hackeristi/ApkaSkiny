@@ -50,16 +50,71 @@ namespace ApkaSkiny.ViewModels
             }
         }
 
-        // Wyświetlanie ulubionych skinów
         public async Task DisplayFavoriteSkinsAsync()
         {
-            FavoriteSkins.Clear();
-            var favorites = await Task.Run(() => _repository.GetFavorites());
+            Skins.Clear();  // Najpierw wyczyść wszystkie skiny
+            var favorites = _repository.GetFavorites();  // Pobierz ulubione skiny
             foreach (var skin in favorites)
             {
-                FavoriteSkins.Add(skin);
+                Skins.Add(skin);  // Dodaj je do kolekcji Skins (ta kolekcja jest powiązana z DataGrid w UI)
             }
         }
+
+private string _averagePrice;
+    private string _cheapestSkin;
+    private string _mostExpensiveSkin;
+
+    public string AveragePrice
+    {
+        get => _averagePrice;
+        set
+        {
+            _averagePrice = value;
+            OnPropertyChanged(nameof(AveragePrice));
+        }
+    }
+
+    public string CheapestSkin
+    {
+        get => _cheapestSkin;
+        set
+        {
+            _cheapestSkin = value;
+            OnPropertyChanged(nameof(CheapestSkin));
+        }
+    }
+
+    public string MostExpensiveSkin
+    {
+        get => _mostExpensiveSkin;
+        set
+        {
+            _mostExpensiveSkin = value;
+            OnPropertyChanged(nameof(MostExpensiveSkin));
+        }
+    }
+
+    public void DisplayStatistics()
+    {
+        var skins = _repository.GetSkins(); // Pobierz wszystkie skiny
+        if (!skins.Any())
+        {
+            AveragePrice = "Brak danych";
+            CheapestSkin = "Brak danych";
+            MostExpensiveSkin = "Brak danych";
+            return;
+        }
+
+        var avgPrice = skins.Average(s => s.Price);
+        var minPriceSkin = skins.OrderBy(s => s.Price).First();
+        var maxPriceSkin = skins.OrderByDescending(s => s.Price).First();
+
+        // Ustaw dane do wyświetlenia w UI
+        AveragePrice = $"${avgPrice:F2}";
+        CheapestSkin = $"{minPriceSkin.Name} - ${minPriceSkin.Price:F2}";
+        MostExpensiveSkin = $"{maxPriceSkin.Name} - ${maxPriceSkin.Price:F2}";
+    }
+
 
         // Add skin to favorites
         public void AddSkinToFavorites(Skin skin)
@@ -102,6 +157,16 @@ namespace ApkaSkiny.ViewModels
             Skins.Add(newSkin); // Add the skin to the collection for display
 
         }
+        public void RemoveSkin(Skin skin)
+        {
+            var existingSkin = _repository.GetSkins()
+                .FirstOrDefault(s => s.Name.Equals(skin.Name, StringComparison.OrdinalIgnoreCase));
+            if (existingSkin != null)
+            {
+                _repository.RemoveSkin(existingSkin); // Usunięcie z repozytorium
+                Skins.Remove(skin); // Usunięcie z ObservableCollection
+            }
+        }
 
         public async Task DisplaySkinsSortedByPriceAsync()
         {
@@ -143,8 +208,6 @@ namespace ApkaSkiny.ViewModels
                 Skins.Add(skin);
             }
         }
-
-
 
         public event PropertyChangedEventHandler PropertyChanged;
 

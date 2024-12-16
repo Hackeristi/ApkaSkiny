@@ -7,32 +7,16 @@
 		<!-- Defining colors for styling -->
 		<SolidColorBrush x:Key="PrimaryColor" Color="#D30E92"/>
 		<SolidColorBrush x:Key="SecondaryColor" Color="#FFC0EE"/>
-		<SolidColorBrush x:Key="ButtonHoverColor" Color="#DB76BC"/>
-		<SolidColorBrush x:Key="ButtonBackgroundColor" Color="#C79274"/>
+		<SolidColorBrush x:Key="ButtonHoverColor" Color="#FFC0EE"/>
+		<SolidColorBrush x:Key="ButtonBackgroundColor" Color="#181818"/>
 		<SolidColorBrush x:Key="TextColor" Color="#946656"/>
 	</Window.Resources>
 
 	<Grid Background="#181818" Margin="10">
-		<!-- TextBlock with welcome message -->
-		<TextBlock x:Name="TitleTextBlock"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Top"
-                   Margin="0,50,0,0"
-                   FontFamily="Courier New"
-                   FontSize="16"
-                   Foreground="#D30E92"
-                   TextWrapping="Wrap"
-                   LineHeight="20" />
+		<Image Name="TextImageControl" Width="600" Height="500" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,50,0,50"/>
 
-		<TextBlock x:Name="TextBlockAsciiArt"
-                          HorizontalAlignment="Center"
-                          VerticalAlignment="Center"
-                          Margin="0,30,0,420"
-                          FontSize="14"
-                          FontFamily="Courier New"
-                          Foreground="White"
-                          TextWrapping="Wrap"
-                          LineHeight="20" />
+		<!-- Image control placed below TitleTextBlock -->
+		<Image Name="ImageControl" Width="600" Height="500" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,100,0,0"/>
 
 		<!-- "Wejdź" button -->
 		<Button Content="Wejdź do interfejsu graficznego"
