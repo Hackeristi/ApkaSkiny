@@ -1,181 +1,104 @@
-﻿using ApkaSkiny.Models;
+﻿using System.Windows;
+using ApkaSkiny.Models;
+using ApkaSkiny.ViewModels;
 using ApkaSkiny.View;
-using System.Windows;
+using ApkaSkiny;
 using System.Windows.Input; // Add this line for MouseEventArgs
 using System.Windows.Media;
 using System.Windows.Controls;
+using System.Collections.ObjectModel;
+using System.Linq;
 namespace ApkaSkiny
 {
     public partial class SecondView : Window
     {
-        private readonly Controller _controller;
+        private SkinViewModel _viewModel;
+        private Controller _controller;
 
         public SecondView(Controller controller)
         {
             InitializeComponent();
             _controller = controller;
+
+            _viewModel = new SkinViewModel();  // Instancja ViewModel
+            DataContext = _viewModel;         // Ustawienie ViewModel jako DataContext
         }
 
-        // Display all skins
+        // Wyświetlanie wszystkich skinów
         private void OnDisplayAllSkins(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                _controller.DisplaySkins();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Wystąpił błąd: {ex.Message}");
-            }
+            _viewModel.DisplaySkinsAsync();  // Wywołanie metody z ViewModel
         }
 
-        // Display favorite skins
+        // Wyświetlanie ulubionych skinów
         private void OnDisplayFavoriteSkins(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                _controller.DisplayFavoriteSkins();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Wystąpił błąd: {ex.Message}");
-            }
+            _viewModel.DisplayFavoriteSkinsAsync();  // Wywołanie metody z ViewModel
         }
 
-        // Add a new skin
+        // Dodawanie nowego skina
         private void OnAddNewSkin(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                _controller.AddNewSkin();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Wystąpił błąd: {ex.Message}");
-            }
+            // Logika dodawania nowego skina
         }
 
-        // Remove a skin
+        // Usuwanie skina
         private void OnRemoveSkin(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                _controller.RemoveSkin();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Wystąpił błąd: {ex.Message}");
-            }
+            // Logika usuwania skina
         }
 
-        // Add a skin to favorites
+        // Dodawanie skina do ulubionych
         private void OnAddSkinToFavorites(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                _controller.AddSkinToFavorites();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Wystąpił błąd: {ex.Message}");
-            }
+            // Logika dodawania skina do ulubionych
         }
 
-        // Remove a skin from favorites
+        // Usuwanie skina z ulubionych
         private void OnRemoveSkinFromFavorites(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                _controller.RemoveSkinFromFavorites();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Wystąpił błąd: {ex.Message}");
-            }
+            // Logika usuwania skina z ulubionych
         }
 
-        // Sort by price
+        // Sortowanie po cenie
         private void OnSortByPrice(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                _controller.DisplaySkinsSortedByPrice();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Wystąpił błąd: {ex.Message}");
-            }
+            // Logika sortowania po cenie
         }
 
-        // Sort by collection
+        // Sortowanie po kolekcji
         private void OnSortByCollection(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                _controller.DisplaySkinsByCollection();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Wystąpił błąd: {ex.Message}");
-            }
+            // Logika sortowania po kolekcji
         }
 
-        // Sort by weapon type
+        // Sortowanie po typie broni
         private void OnSortByWeaponType(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                _controller.DisplaySkinsByWeaponType();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Wystąpił błąd: {ex.Message}");
-            }
+            // Logika sortowania po typie broni
         }
 
-        // Sort by chosen price
+        // Sortowanie po wybranej cenie
         private void OnSortByChosenPrice(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                _controller.DisplaySkinsByChosenPrice();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Wystąpił błąd: {ex.Message}");
-            }
+            // Logika sortowania po wybranej cenie
         }
 
-        // Search by name
+        // Wyszukiwanie po nazwie
         private void OnSearchByName(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                _controller.SearchSkinsByName();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Wystąpił błąd: {ex.Message}");
-            }
+            // Logika wyszukiwania po nazwie
         }
 
-        // Show statistics
+        // Wyświetlanie statystyk
         private void OnShowStatistics(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                _controller.DisplayStatistics();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Wystąpił błąd: {ex.Message}");
-            }
+            // Logika wyświetlania statystyk
         }
 
-        // Exit the application
+        // Zamykanie aplikacji
         private void OnExitApp(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Zamykanie aplikacji...");
             Application.Current.Shutdown();
         }
 

@@ -50,16 +50,10 @@ namespace ApkaSkiny
 
         private void SwitchToTextButton_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                System.Diagnostics.Process.Start("ApkaSkiny.exe"); // Uruchamia aplikację konsolową
-                this.Close();  // Close the MainWindow
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Błąd: {ex.Message}");
-                Console.WriteLine($"Stack Trace: {ex.StackTrace}");
-            }
+            var view = new SkinView(null); // Or pass an already initialized Controller if applicable
+            var controller = new Controller(view);
+            this.Close(); // Close current window
+            controller.Run(); // Start the controller
         }
 
         private void ExitButton_Click(object sender, RoutedEventArgs e)

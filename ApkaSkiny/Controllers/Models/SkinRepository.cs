@@ -49,7 +49,10 @@
             };
             favorites = new List<Skin>();
         }
-
+        public IEnumerable<Skin> GetAllSkins()
+        {
+            return skins;
+        }
         public (string WeaponCategory, string Side) GetWeaponInfo(string weaponName)
         {
             if (WeaponInfoMap.TryGetValue(weaponName, out var weaponInfo))
@@ -68,6 +71,7 @@
 
         public List<Skin> GetSkins(string sortBy = null)
         {
+            Console.WriteLine($"Ilość skinów w repozytorium: {skins.Count}");
             if (sortBy == "price")
             {
                 return skins.OrderBy(s => s.Price).ToList();

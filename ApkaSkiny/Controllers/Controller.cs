@@ -7,8 +7,8 @@ using global::ApkaSkiny.Views;
     {
         public class Controller
         {
-            private readonly SkinRepository _repository;
-        private readonly IUI _view;
+            private SkinRepository _repository;
+            private readonly IUI _view;
 
         public Controller(IUI view)
         {
