@@ -83,21 +83,26 @@ namespace ApkaSkiny.ViewModels
             }
         }
 
-        // Add a new skin
-        public void AddNewSkin(Skin skin)
+        // Add this method to your SkinViewModel class to handle adding a new skin
+        public void AddNewSkin(string name, string collection, string weaponType, decimal price, string side, string weaponCategory)
         {
-            var existingSkin = _repository.GetSkins().FirstOrDefault(s => s.Name.Equals(skin.Name, StringComparison.OrdinalIgnoreCase));
+            var existingSkin = _repository.GetSkins().FirstOrDefault(s => s.Name.Equals(name, StringComparison.OrdinalIgnoreCase) &&
+                                                                         s.Collection.Equals(collection, StringComparison.OrdinalIgnoreCase) &&
+                                                                         s.WeaponType.Equals(weaponType, StringComparison.OrdinalIgnoreCase) &&
+                                                                         s.WeaponCategory.Equals(weaponCategory, StringComparison.OrdinalIgnoreCase));
 
-            if (existingSkin == null)
+            if (existingSkin != null)
             {
-                _repository.AddSkin(skin);
-                Skins.Add(skin);
+                // You can show a message here, as skin already exists
+                return;
             }
-            else
-            {
-                // Handle skin already exists scenario
-            }
+
+            var newSkin = new Skin(name, collection, weaponType, price, side, weaponCategory);
+            _repository.AddSkin(newSkin); // Add the skin to the repository
+            Skins.Add(newSkin); // Add the skin to the collection for display
+
         }
+
         public async Task DisplaySkinsSortedByPriceAsync()
         {
             Skins.Clear();

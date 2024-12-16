@@ -34,12 +34,19 @@ public class GUIUI : IUI
         return null; // User closed the window or canceled
     }
 
-    public string GetUserInput(string prompt)
+    public string GetUserInput(string prompt, string title)
     {
-        var window = new InputWindow(prompt);
-        window.ShowDialog();
-        return window.UserInput;
+        var window = new InputWindow(prompt, title);  // Pass the title dynamically
+        bool? result = window.ShowDialog();
+
+        if (result == true)
+        {
+            return window.UserInput;
+        }
+
+        return null;  // User closed the window or canceled
     }
+
 
     public async void ShowAsciiAnimation(string[] animationFrames)
     {

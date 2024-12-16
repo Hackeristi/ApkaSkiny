@@ -16,7 +16,7 @@ namespace ApkaSkiny.Models
             Console.WriteLine(message);
         }
 
-        public string GetUserInput(string prompt)
+        public string GetUserInput(string prompt, string title)
         {
             Console.WriteLine(prompt);
             return Console.ReadLine();

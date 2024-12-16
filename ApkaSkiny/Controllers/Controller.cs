@@ -160,11 +160,12 @@ using global::ApkaSkiny.Views;
             {
                 var allSkins = _repository.GetSkins();
 
-                var minPriceChoice = _view.GetUserInput("Podaj minimalną cenę (pozostaw puste, aby nie filtrować):");
-                decimal? minPrice = string.IsNullOrEmpty(minPriceChoice) ? (decimal?)null : decimal.Parse(minPriceChoice);
+var minPriceChoice = _view.GetUserInput("Podaj minimalną cenę (pozostaw puste, aby nie filtrować):", "Minimalna Cena");
+decimal? minPrice = string.IsNullOrEmpty(minPriceChoice) ? (decimal?)null : decimal.Parse(minPriceChoice);
 
-                var maxPriceChoice = _view.GetUserInput("Podaj maksymalną cenę (pozostaw puste, aby nie filtrować):");
-                decimal? maxPrice = string.IsNullOrEmpty(maxPriceChoice) ? (decimal?)null : decimal.Parse(maxPriceChoice);
+var maxPriceChoice = _view.GetUserInput("Podaj maksymalną cenę (pozostaw puste, aby nie filtrować):", "Maksymalna Cena");
+decimal? maxPrice = string.IsNullOrEmpty(maxPriceChoice) ? (decimal?)null : decimal.Parse(maxPriceChoice);
+
 
                 var filteredSkins = allSkins
                 .Where(s =>
@@ -211,7 +212,7 @@ using global::ApkaSkiny.Views;
             string name;
             do
             {
-                name = _view.GetUserInput("Podaj nazwę skina:");
+                name = _view.GetUserInput("Podaj nazwę skina:", "Nazwa Skina");
                 name = CapitalizeFirstLetter(name).Trim();
 
                 if (string.IsNullOrEmpty(name))
@@ -223,7 +224,7 @@ using global::ApkaSkiny.Views;
             string collection;
             do
             {
-                collection = _view.GetUserInput("Podaj nazwę kolekcji:");
+                collection = _view.GetUserInput("Podaj nazwę kolekcji:", "Nazwa Kolekcji");
                 collection = CapitalizeFirstLetter(collection).Trim();
 
                 if (string.IsNullOrEmpty(collection))
@@ -263,7 +264,7 @@ using global::ApkaSkiny.Views;
                     break;
                 }
 
-                _view.ShowMessage($"[#D30E92]Strona \"{side}\" nie pasuje do typu broni \"{weaponType}\". Spróbuj ponownie![/]");
+                _view.ShowMessage($"[#D30E92]Strona \"{side}\" nie pasuje do typu broni \"{weaponType}\". Spróbuj ponownie!");
                 attemptCount++;
             }
 
@@ -280,6 +281,7 @@ using global::ApkaSkiny.Views;
             AnsiConsole.Clear();
             _view.ShowMessage($"[#FFD6E9]Dodano nowy skin: {name} w cenie ${price:F2}.[/]");
         }
+
 
 
         public void WaitForUserToContinue()
@@ -310,7 +312,7 @@ using global::ApkaSkiny.Views;
 
             while (!isValidPrice)
             {
-                var priceInput = _view.GetUserInput("Podaj cenę skina (w USD):");
+                var priceInput = _view.GetUserInput("Podaj cenę skina (w USD):", "Cena Skina");
 
                 isValidPrice = decimal.TryParse(priceInput, out price) && price > 0;
 
@@ -330,7 +332,7 @@ using global::ApkaSkiny.Views;
 
             while (attemptCount < 3)
             {
-                userInput = CapitalizeFirstLetter(_view.GetUserInput($"Podaj {inputType}:"));
+                userInput = CapitalizeFirstLetter(_view.GetUserInput($"Podaj {inputType}:", $"Wpisz {inputType}"));
 
                 if (validOptions.Contains(userInput, StringComparer.OrdinalIgnoreCase))
                 {

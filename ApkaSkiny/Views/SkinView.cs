@@ -71,7 +71,7 @@ namespace ApkaSkiny.Views
             );
         }
 
-        public string GetUserInput(string prompt)
+        public string GetUserInput(string prompt, string title)
         {
             AnsiConsole.Markup($"[#FFBCDA]{prompt}[/]: ");
             return Console.ReadLine() ?? string.Empty;

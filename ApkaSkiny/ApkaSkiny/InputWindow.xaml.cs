@@ -1,7 +1,5 @@
-﻿using ApkaSkiny.Models;
-using ApkaSkiny.View;
-using System.Windows;
-using System.Windows.Input; // Add this line for MouseEventArgs
+﻿using System.Windows;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Controls;
 
@@ -9,16 +7,19 @@ namespace ApkaSkiny.View
 {
     public partial class InputWindow : Window
     {
-        // Add the Prompt property to store the prompt message
-        public string Prompt { get; private set; }
-
+        // Property to store user input
         public string UserInput { get; private set; }
 
-        // Constructor
-        public InputWindow(string prompt)
+        // Property to store prompt message
+        public string Prompt { get; private set; }
+
+        // Constructor to accept prompt and set the title dynamically
+        public InputWindow(string prompt, string title)
         {
-            InitializeComponent();  // Initialize the window and XAML components
-            this.Prompt = prompt;   // Set the Prompt property
+            InitializeComponent();
+            this.Prompt = prompt;
+            this.Title = title; // Set the window title dynamically
+            this.DataContext = this; // Bind the Prompt property to the UI
         }
 
         // OK button click handler
@@ -28,6 +29,7 @@ namespace ApkaSkiny.View
             this.DialogResult = true;       // Set the dialog result to true
             this.Close();                   // Close the window
         }
+
         private void Button_MouseEnter(object sender, MouseEventArgs e)
         {
             Button button = sender as Button;
@@ -46,7 +48,4 @@ namespace ApkaSkiny.View
             }
         }
     }
-
-
-
 }

@@ -8,7 +8,7 @@ namespace ApkaSkiny.Models
         void ShowMessage(string message);
         void PrintSkinsTable(IEnumerable<Skin> skins);
         string GetSelection(string prompt, List<string> options);
-        string GetUserInput(string prompt);
+        string GetUserInput(string prompt, string title);
         void ShowAsciiAnimation(string[] animationFrames);
         void WaitForUserToContinue();
         void ShowTitle(string title);

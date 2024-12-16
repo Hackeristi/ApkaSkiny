@@ -12,42 +12,32 @@
 	</Window.Resources>
 
 	<Grid Background="#181818" Margin="10">
-		<!-- Centering content vertically and horizontally using Grid with one row and column -->
 		<Grid.RowDefinitions>
-			<RowDefinition Height="*" />
-			<!-- Take all available vertical space -->
 			<RowDefinition Height="Auto" />
-			<!-- Auto height for the prompt text -->
 			<RowDefinition Height="Auto" />
-			<!-- Auto height for the input field -->
 			<RowDefinition Height="Auto" />
-			<!-- Auto height for the button -->
-			<RowDefinition Height="*" />
-			<!-- Take remaining vertical space -->
+			<RowDefinition Height="Auto" />
 		</Grid.RowDefinitions>
 
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="*" />
-			<!-- Take all available horizontal space -->
 			<ColumnDefinition Width="Auto" />
-			<!-- Auto width for content -->
 			<ColumnDefinition Width="*" />
-			<!-- Take remaining horizontal space -->
 		</Grid.ColumnDefinitions>
 
 		<!-- Prompt TextBlock -->
 		<TextBlock Text="{Binding Prompt}" VerticalAlignment="Center" HorizontalAlignment="Center"
-                   Foreground="{StaticResource TextColor}" FontSize="18" Grid.Row="1" Grid.Column="1" Margin="20,10,20,10"/>
+                   Foreground="{StaticResource TextColor}" FontSize="18" Grid.Row="0" Grid.Column="1" Margin="20,10,20,10"/>
 
 		<!-- Input TextBox -->
 		<TextBox x:Name="InputTextBox" VerticalAlignment="Center" HorizontalAlignment="Center"
-                 Width="250" Height="40" Margin="20,10,20,10" Padding="10"
-                 Background="{StaticResource SecondaryColor}" Foreground="Black" FontSize="16" Grid.Row="2" Grid.Column="1"/>
+                 Width="150" Height="40" Margin="20,10,20,10" Padding="10"
+                 Background="{StaticResource SecondaryColor}" Foreground="Black" FontSize="16" Grid.Row="1" Grid.Column="1"/>
 
 		<!-- OK Button -->
 		<Button Content="OK" VerticalAlignment="Center" HorizontalAlignment="Center" Width="100" Height="40"
                 Background="{StaticResource ButtonBackgroundColor}" Foreground="White"
                 BorderBrush="{StaticResource PrimaryColor}" BorderThickness="2"
-                MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave" Click="OnOkClicked" Grid.Row="3" Grid.Column="1" Margin="0,20,0,0"/>
+                MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave" Click="OnOkClicked" Grid.Row="2" Grid.Column="1" Margin="0,20,0,0"/>
 	</Grid>
 </Window>
