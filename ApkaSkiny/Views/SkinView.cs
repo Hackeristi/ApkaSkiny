@@ -10,12 +10,11 @@ namespace ApkaSkiny.Views
 {
     public class SkinView : IUI
     {
-        private readonly Controller _controller;  // Store the controller
+        private readonly Controller _controller;  
 
-        // Constructor that accepts a Controller
         public SkinView(Controller controller)
         {
-            _controller = controller;  // Store the controller for use in other methods
+            _controller = controller; 
         }
         public void ShowTitle(string title)
         {
@@ -37,13 +36,12 @@ namespace ApkaSkiny.Views
             AnsiConsole.MarkupLine("                                      +#*:                                                \r\n");
 
             var selection = AnsiConsole.Prompt(
-                new SelectionPrompt<string>()  // Ensure this is string
+                new SelectionPrompt<string>() 
                     .Title("[#FFD6E9]Wybierz opcję:[/]")
                     .AddChoices("Wejdź do aplikacji", "Wyjdź z aplikacji")
                     .HighlightStyle(new Spectre.Console.Style(foreground: new Spectre.Console.Color(0xC7, 0x92, 0x74)))
             );
 
-            // Fix the comparison by ensuring selection is of type string
             if (selection == "Wejdź do aplikacji")
             {
                 AnsiConsole.MarkupLine("Wejście do aplikacji...");
@@ -129,11 +127,10 @@ namespace ApkaSkiny.Views
 
 
 
-        // The missing method implementation
         public void WaitForUserToContinue()
         {
             AnsiConsole.MarkupLine("[#FFBCDA]Naciśnij dowolny klawisz, aby kontynuować...[/]");
-            Console.ReadKey(); // Wait for user to press any key
+            Console.ReadKey();
         }
     }
 }

@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Wybierz Skin" Height="300" Width="400">
 	<Window.Resources>
-		<!-- Kolory do stylizacji -->
 		<SolidColorBrush x:Key="PrimaryColor" Color="#D30E92"/>
 		<SolidColorBrush x:Key="SecondaryColor" Color="#FFC0EE"/>
 		<SolidColorBrush x:Key="ButtonHoverColor" Color="#FFC0EE"/>

@@ -4,7 +4,6 @@
         Title="Skin Management" Height="750" Width="800">
 
 	<Window.Resources>
-		<!-- Defining colors for styling -->
 		<SolidColorBrush x:Key="PrimaryColor" Color="#D30E92"/>
 		<SolidColorBrush x:Key="SecondaryColor" Color="#FFC0EE"/>
 		<SolidColorBrush x:Key="ButtonHoverColor" Color="#FFC0EE"/>
@@ -15,10 +14,8 @@
 	<Grid Background="#181818" Margin="10">
 		<Image Name="TextImageControl" Width="600" Height="500" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,50,0,50"/>
 
-		<!-- Image control placed below TitleTextBlock -->
 		<Image Name="ImageControl" Width="600" Height="500" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,100,0,0"/>
 
-		<!-- "Wejdź" button -->
 		<Button Content="Wejdź do interfejsu graficznego"
                 Margin="0,0,0,30"
                 HorizontalAlignment="Center"
@@ -33,7 +30,6 @@
                 MouseLeave="Button_MouseLeave"
                 Click="EnterButton_Click"/>
 
-		<!-- "Przełącz na interfejs tekstowy" button -->
 		<Button Content="Przełącz na interfejs tekstowy"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
@@ -48,7 +44,6 @@
                 MouseLeave="Button_MouseLeave"
                 Click="SwitchToTextButton_Click"/>
 
-		<!-- "Wyjście" button -->
 		<Button Content="Wyjście"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"

@@ -44,26 +44,23 @@ namespace ApkaSkiny
             }
         }
 
-        // Click event for switching to the second view
         private void EnterButton_Click(object sender, RoutedEventArgs e)
         {
-            // Create and show SecondView
             SecondView secondView = new SecondView(_controller);
-            this.Close();  // Close the MainWindow
-            secondView.Show();  // Show SecondView
+            this.Close();  
+            secondView.Show();  
         }
 
         private void SwitchToTextButton_Click(object sender, RoutedEventArgs e)
         {
-            var view = new SkinView(null); // Or pass an already initialized Controller if applicable
+            var view = new SkinView(null); 
             var controller = new Controller(view);
-            this.Close(); // Close current window
-            controller.Run(); // Start the controller
+            this.Close(); 
+            controller.Run();
         }
 
         private void ExitButton_Click(object sender, RoutedEventArgs e)
         {
-            // Close the application
             Application.Current.Shutdown();
         }
 
@@ -90,18 +87,14 @@ namespace ApkaSkiny
 
         public void ShowImage()
         {
-            // Ścieżka do obrazu (możesz podać pełną ścieżkę lub ścieżkę względną)
             string imagePath = @"C:\Users\sasza\source\repos\ApkaSkiny\c5575d9f-5d14-4e25-b537-0c566e1b8b83-front3x.jpg";
 
-            // Ustawienie źródła obrazu
             ImageControl.Source = new BitmapImage(new Uri(imagePath, UriKind.Absolute));
         }
         public void ShowText()
         {
-            // Ścieżka do obrazu (możesz ustawić ścieżkę dynamicznie, np. na podstawie nazwy tytułu)
             string textimagePath = @"C:\Users\sasza\source\repos\ApkaSkiny\text-to-image.jpg"; // Zmień ścieżkę na odpowiednią
 
-            // Ustawienie źródła obrazu
             TextImageControl.Source = new BitmapImage(new Uri(textimagePath, UriKind.Absolute));
         }
 

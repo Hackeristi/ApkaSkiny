@@ -2,7 +2,7 @@
 using System.Windows;
 using ApkaSkiny.Models;
 using ApkaSkiny.ViewModels;
-using System.Windows.Input; // Add this line for MouseEventArgs
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Controls;
 using System.Linq;
@@ -11,15 +11,15 @@ namespace ApkaSkiny
 {
     public partial class SelectSkinDialog : Window
     {
-        public string SelectedSkin { get; private set; } // Wybrany skin
+        public string SelectedSkin { get; private set; }
 
         public SelectSkinDialog(string title, List<string> skinChoices)
         {
             try
             {
                 InitializeComponent();
-                Title = title; // Ustawienie tytułu okna
-                SkinListBox.ItemsSource = skinChoices; // Powiązanie z listą skinów
+                Title = title;
+                SkinListBox.ItemsSource = skinChoices; 
             }
             catch (Exception ex)
             {
@@ -30,13 +30,13 @@ namespace ApkaSkiny
 
         private void OnOkButtonClick(object sender, RoutedEventArgs e)
         {
-            SelectedSkin = SkinListBox.SelectedItem as string; // Pobranie wybranego skina
+            SelectedSkin = SkinListBox.SelectedItem as string; 
             if (SelectedSkin == null)
             {
                 MessageBox.Show("Nie wybrano żadnego skina!", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-            DialogResult = true; // Ustawienie wyniku okna na true
+            DialogResult = true;
             Close();
         }
 

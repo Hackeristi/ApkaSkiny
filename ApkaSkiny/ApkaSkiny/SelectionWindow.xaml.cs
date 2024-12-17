@@ -15,25 +15,21 @@ namespace ApkaSkiny.View
             Prompt = prompt;
             Options = options;
 
-            // Set the DataContext for binding
             DataContext = this;
 
-            // Populate the ListBox with options
             OptionsListBox.ItemsSource = Options;
         }
 
         private void OptionsListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
-            // Update the selected option
             SelectedOption = (string)OptionsListBox.SelectedItem;
         }
 
         private void SelectButton_Click(object sender, RoutedEventArgs e)
         {
-            // Ensure an option is selected
             if (!string.IsNullOrEmpty(SelectedOption))
             {
-                DialogResult = true; // Close the dialog with success
+                DialogResult = true; 
                 Close();
             }
             else

@@ -8,8 +8,8 @@ class Program
     static void Main(string[] args)
     {
         var app = new Application();
-        var controller = new Controller(new GUIUI());  // Assuming GUIUI is your UI implementation
-        var window = new MainWindow(controller);  // Pass the controller to MainWindow
+        var controller = new Controller(new GUIUI()); 
+        var window = new MainWindow(controller); 
         app.Run(window);
     }
 }

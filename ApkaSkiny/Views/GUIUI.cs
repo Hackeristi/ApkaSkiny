@@ -7,7 +7,6 @@ public class GUIUI : IUI
 {
     public void ShowMessage(string message)
     {
-        // Ensures that the method is executed on the UI thread
         Application.Current.Dispatcher.Invoke(() =>
         {
             MessageBox.Show(message, "Information", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -18,7 +17,6 @@ public class GUIUI : IUI
     {
         var grid = new System.Windows.Controls.DataGrid();
         grid.ItemsSource = skins;
-        // You need to add the DataGrid to your WPF window's layout
     }
 
     public string GetSelection(string prompt, List<string> options)
@@ -28,15 +26,15 @@ public class GUIUI : IUI
 
         if (result == true)
         {
-            return window.SelectedOption; // Return the selected option
+            return window.SelectedOption;
         }
 
-        return null; // User closed the window or canceled
+        return null; 
     }
 
     public string GetUserInput(string prompt, string title)
     {
-        var window = new InputWindow(prompt, title);  // Pass the title dynamically
+        var window = new InputWindow(prompt, title);
         bool? result = window.ShowDialog();
 
         if (result == true)
@@ -44,7 +42,7 @@ public class GUIUI : IUI
             return window.UserInput;
         }
 
-        return null;  // User closed the window or canceled
+        return null;
     }
 
 
@@ -52,9 +50,7 @@ public class GUIUI : IUI
     {
         foreach (var frame in animationFrames)
         {
-            // Update a Label or TextBlock to show each frame
-            // For example, update a TextBlock or Label control with the frame
-            await Task.Delay(500); // Simulate frame delay asynchronously
+            await Task.Delay(500);
         }
     }
 
@@ -65,7 +61,6 @@ public class GUIUI : IUI
 
     public void ShowTitle(string title)
     {
-        // Show title in a window's title bar or any other WPF control
         var window = new Window
         {
             Title = title

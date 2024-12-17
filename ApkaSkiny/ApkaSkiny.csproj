@@ -5,7 +5,6 @@
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<UseWPF>true</UseWPF>
-		<!-- Upewnij się, że UseWPF jest ustawione na true -->
 		<OutputType>WinExe</OutputType>
 	</PropertyGroup>
 

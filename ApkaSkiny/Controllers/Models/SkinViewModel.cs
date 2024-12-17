@@ -39,7 +39,6 @@ namespace ApkaSkiny.ViewModels
             FavoriteSkins = new ObservableCollection<Skin>();
         }
 
-        // Wyświetlanie wszystkich skinów
         public async Task DisplaySkinsAsync()
         {
             Skins.Clear();
@@ -52,11 +51,11 @@ namespace ApkaSkiny.ViewModels
 
         public async Task DisplayFavoriteSkinsAsync()
         {
-            Skins.Clear();  // Najpierw wyczyść wszystkie skiny
-            var favorites = _repository.GetFavorites();  // Pobierz ulubione skiny
+            Skins.Clear();
+            var favorites = _repository.GetFavorites(); 
             foreach (var skin in favorites)
             {
-                Skins.Add(skin);  // Dodaj je do kolekcji Skins (ta kolekcja jest powiązana z DataGrid w UI)
+                Skins.Add(skin);
             }
         }
 
@@ -96,7 +95,7 @@ private string _averagePrice;
 
     public void DisplayStatistics()
     {
-        var skins = _repository.GetSkins(); // Pobierz wszystkie skiny
+        var skins = _repository.GetSkins();
         if (!skins.Any())
         {
             AveragePrice = "Brak danych";
@@ -109,14 +108,12 @@ private string _averagePrice;
         var minPriceSkin = skins.OrderBy(s => s.Price).First();
         var maxPriceSkin = skins.OrderByDescending(s => s.Price).First();
 
-        // Ustaw dane do wyświetlenia w UI
         AveragePrice = $"${avgPrice:F2}";
         CheapestSkin = $"{minPriceSkin.Name} - ${minPriceSkin.Price:F2}";
         MostExpensiveSkin = $"{maxPriceSkin.Name} - ${maxPriceSkin.Price:F2}";
     }
 
 
-        // Add skin to favorites
         public void AddSkinToFavorites(Skin skin)
         {
             if (!skin.IsFavorite)
@@ -127,7 +124,6 @@ private string _averagePrice;
             }
         }
 
-        // Remove skin from favorites
         public void RemoveSkinFromFavorites(Skin skin)
         {
             if (skin.IsFavorite)
@@ -138,7 +134,6 @@ private string _averagePrice;
             }
         }
 
-        // Add this method to your SkinViewModel class to handle adding a new skin
         public void AddNewSkin(string name, string collection, string weaponType, decimal price, string side, string weaponCategory)
         {
             var existingSkin = _repository.GetSkins().FirstOrDefault(s => s.Name.Equals(name, StringComparison.OrdinalIgnoreCase) &&
@@ -148,13 +143,12 @@ private string _averagePrice;
 
             if (existingSkin != null)
             {
-                // You can show a message here, as skin already exists
                 return;
             }
 
             var newSkin = new Skin(name, collection, weaponType, price, side, weaponCategory);
-            _repository.AddSkin(newSkin); // Add the skin to the repository
-            Skins.Add(newSkin); // Add the skin to the collection for display
+            _repository.AddSkin(newSkin);
+            Skins.Add(newSkin);
 
         }
         public void RemoveSkin(Skin skin)
@@ -163,8 +157,8 @@ private string _averagePrice;
                 .FirstOrDefault(s => s.Name.Equals(skin.Name, StringComparison.OrdinalIgnoreCase));
             if (existingSkin != null)
             {
-                _repository.RemoveSkin(existingSkin); // Usunięcie z repozytorium
-                Skins.Remove(skin); // Usunięcie z ObservableCollection
+                _repository.RemoveSkin(existingSkin);
+                Skins.Remove(skin); 
             }
         }
 

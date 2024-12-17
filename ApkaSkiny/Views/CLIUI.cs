@@ -31,7 +31,7 @@ namespace ApkaSkiny.Models
             }
 
             var choice = Console.ReadLine();
-            return options[int.Parse(choice) - 1];  // Zwróć wybraną opcję
+            return options[int.Parse(choice) - 1]; 
         }
 
         public void ShowAsciiAnimation(string[] animationFrames)
@@ -40,7 +40,7 @@ namespace ApkaSkiny.Models
             {
                 Console.Clear();
                 Console.WriteLine(frame);
-                Thread.Sleep(500);  // Pokazuj animację przez pół sekundy
+                Thread.Sleep(500); 
             }
         }
 

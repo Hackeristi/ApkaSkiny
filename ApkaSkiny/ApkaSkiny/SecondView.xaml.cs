@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using ApkaSkiny.Models;
 using ApkaSkiny.ViewModels;
-using System.Windows.Input; // Add this line for MouseEventArgs
+using System.Windows.Input; 
 using System.Windows.Media;
 using System.Windows.Controls;
 using System.Linq;
@@ -19,38 +19,33 @@ namespace ApkaSkiny
             InitializeComponent();
             _controller = controller;
 
-            _viewModel = new SkinViewModel();  // Instancja ViewModel
-            DataContext = _viewModel;         // Ustawienie ViewModel jako DataContext
+            _viewModel = new SkinViewModel();
+            DataContext = _viewModel;
         }
 
-        // Wyświetlanie wszystkich skinów
         private void OnDisplayAllSkins(object sender, RoutedEventArgs e)
         {
-            _viewModel.DisplaySkinsAsync();  // Wywołanie metody z ViewModel
+            _viewModel.DisplaySkinsAsync();
         }
 
-        // Wyświetlanie ulubionych skinów
         private void OnDisplayFavoriteSkins(object sender, RoutedEventArgs e)
         {
-            _viewModel.DisplayFavoriteSkinsAsync();  // Wywołanie metody z ViewModel
+            _viewModel.DisplayFavoriteSkinsAsync();
         }
         private async void OnDisplayStatistics(object sender, RoutedEventArgs e)
         {
-            // Ensure you're calling the method to update the statistics
             await Task.Run(() => _viewModel.DisplayStatistics());
         }
 
 
-        // Sortowanie po cenie
         private void OnSortByPrice(object sender, RoutedEventArgs e)
         {
-            _viewModel.DisplaySkinsSortedByPriceAsync();  // Wywołanie metody z ViewModel
+            _viewModel.DisplaySkinsSortedByPriceAsync();
         }
 
         private async void OnSortByCollection(object sender, RoutedEventArgs e)
         {
-            // Ask for the collection name
-            InputWindow collectionInputWindow = new InputWindow("Enter the collection name to filter by:", "Collection Name");
+            InputWindow collectionInputWindow = new InputWindow("Wpisz nazwę kolekcji, aby przefiltrować:", "Nazwa kolekcji");
             bool? collectionResult = collectionInputWindow.ShowDialog();
 
             string collection = null;
@@ -58,30 +53,26 @@ namespace ApkaSkiny
             {
                 collection = collectionInputWindow.UserInput;
 
-                // If the user input is empty, we can show a message or default behavior
                 if (string.IsNullOrEmpty(collection))
                 {
-                    MessageBox.Show("Please enter a valid collection name.");
+                    MessageBox.Show("Podaj poprawną nazwę kolekcji.");
                     return;
                 }
             }
 
-            // Call the method from ViewModel to display skins by the entered collection name
             await _viewModel.DisplaySkinsByCollectionAsync(collection);
 
-            // Optionally, show a message if no skins are found for the entered collection
             var filteredSkins = _viewModel.Skins.Where(s => s.Collection.Equals(collection, StringComparison.OrdinalIgnoreCase)).ToList();
             if (!filteredSkins.Any())
             {
-                MessageBox.Show($"No skins found for the collection: {collection}");
+                MessageBox.Show($"Nie znaleziono skórek dla kolekcji: {collection}");
             }
         }
 
 
         private async void OnSortByWeaponType(object sender, RoutedEventArgs e)
         {
-            // Ask for the weapon type
-            InputWindow weaponTypeInputWindow = new InputWindow("Enter the weapon type to filter by:", "Weapon Type");
+            InputWindow weaponTypeInputWindow = new InputWindow("Wpisz typ broni, aby przefiltrować:", "Typ broni");
             bool? weaponTypeResult = weaponTypeInputWindow.ShowDialog();
 
             string weaponType = null;
@@ -89,29 +80,25 @@ namespace ApkaSkiny
             {
                 weaponType = weaponTypeInputWindow.UserInput;
 
-                // If the user input is empty, we can show a message or default behavior
                 if (string.IsNullOrEmpty(weaponType))
                 {
-                    MessageBox.Show("Please enter a valid weapon type.");
+                    MessageBox.Show("Podaj poprawny typ broni.");
                     return;
                 }
             }
 
-            // Call the method from ViewModel to display skins by the entered weapon type
             await _viewModel.DisplaySkinsByWeaponTypeAsync(weaponType);
 
-            // Optionally, show a message if no skins are found for the entered weapon type
             var filteredSkins = _viewModel.Skins.Where(s => s.WeaponType.Equals(weaponType, StringComparison.OrdinalIgnoreCase)).ToList();
             if (!filteredSkins.Any())
             {
-                MessageBox.Show($"No skins found for the weapon type: {weaponType}");
+                MessageBox.Show($"Nie znaleziono skórek dla typu broni: {weaponType}");
             }
         }
 
         private async void OnSortByChosenPrice(object sender, RoutedEventArgs e)
         {
-            // Ask for minimum price
-            InputWindow minPriceInputWindow = new InputWindow("Enter the minimum price (leave blank for no filter):", "Min Price");
+            InputWindow minPriceInputWindow = new InputWindow("Wpisz minimalną cenę (zostaw puste, aby pominąć):", "Minimalna cena");
             bool? minPriceResult = minPriceInputWindow.ShowDialog();
 
             decimal? minPrice = null;
@@ -119,31 +106,29 @@ namespace ApkaSkiny
             {
                 string minPriceUserInput = minPriceInputWindow.UserInput;
 
-                // Check if the input is not empty and try to parse the minimum price
                 if (!string.IsNullOrEmpty(minPriceUserInput))
                 {
                     if (decimal.TryParse(minPriceUserInput, out decimal minPriceValue))
                     {
-                        if (minPriceValue >= 0) // Ensure the minimum price is not negative
+                        if (minPriceValue >= 0) 
                         {
                             minPrice = minPriceValue;
                         }
                         else
                         {
-                            MessageBox.Show("Minimum price cannot be negative. Please enter a valid number.");
+                            MessageBox.Show("Minimalna cena nie może być ujemna.");
                             return;
                         }
                     }
                     else
                     {
-                        MessageBox.Show("Invalid minimum price input. Please enter a valid number.");
+                        MessageBox.Show("Podano nieprawidłową wartość minimalnej ceny.");
                         return;
                     }
                 }
             }
 
-            // Ask for maximum price
-            InputWindow maxPriceInputWindow = new InputWindow("Enter the maximum price (leave blank for no filter):", "Max Price");
+            InputWindow maxPriceInputWindow = new InputWindow("Wpisz maksymalną cenę (zostaw puste, aby pominąć):", "Maksymalna cena");
             bool? maxPriceResult = maxPriceInputWindow.ShowDialog();
 
             decimal? maxPrice = null;
@@ -151,38 +136,34 @@ namespace ApkaSkiny
             {
                 string maxPriceUserInput = maxPriceInputWindow.UserInput;
 
-                // Check if the input is not empty and try to parse the maximum price
                 if (!string.IsNullOrEmpty(maxPriceUserInput))
                 {
                     if (decimal.TryParse(maxPriceUserInput, out decimal maxPriceValue))
                     {
-                        if (maxPriceValue >= 0) // Ensure the maximum price is not negative
+                        if (maxPriceValue >= 0)
                         {
                             maxPrice = maxPriceValue;
                         }
                         else
                         {
-                            MessageBox.Show("Maximum price cannot be negative. Please enter a valid number.");
+                            MessageBox.Show("Maksymalna cena nie może być ujemna.");
                             return;
                         }
                     }
                     else
                     {
-                        MessageBox.Show("Invalid maximum price input. Please enter a valid number.");
+                        MessageBox.Show("Podano nieprawidłową wartość maksymalnej ceny.");
                         return;
                     }
                 }
             }
 
-            // Once we have both prices (or null values for no filtering), display skins by price range
             await _viewModel.DisplaySkinsByChosenPriceAsync(minPrice, maxPrice);
         }
 
-        // Wyszukiwanie po nazwie
         private async void OnSearchByName(object sender, RoutedEventArgs e)
         {
-            // Ask for the skin name
-            InputWindow nameInputWindow = new InputWindow("Enter the skin name to search for:", "Skin Name");
+            InputWindow nameInputWindow = new InputWindow("Wpisz nazwę skina:", "Nazwa skina");
             bool? nameResult = nameInputWindow.ShowDialog();
 
             string searchTerm = null;
@@ -190,48 +171,40 @@ namespace ApkaSkiny
             {
                 searchTerm = nameInputWindow.UserInput;
 
-                // If the user input is empty, we will set searchTerm to null to show all skins
                 if (string.IsNullOrEmpty(searchTerm))
                 {
                     searchTerm = null;
                 }
             }
 
-            // If searchTerm is null or empty, we display all skins
             List<Skin> filteredSkins;
             if (string.IsNullOrEmpty(searchTerm))
             {
-                filteredSkins = _viewModel.Skins.ToList(); // Show all skins if searchTerm is null or empty
+                filteredSkins = _viewModel.Skins.ToList();
             }
             else
             {
-                // Filter skins where name contains searchTerm (case-insensitive)
                 filteredSkins = _viewModel.Skins
                     .Where(s => s.Name != null && s.Name.Contains(searchTerm, StringComparison.OrdinalIgnoreCase))
                     .ToList();
             }
 
-            // Clear the existing skins and add the filtered skins
             _viewModel.Skins.Clear();
             foreach (var skin in filteredSkins)
             {
-                _viewModel.Skins.Add(skin);  // Add the filtered skins back to the collection
+                _viewModel.Skins.Add(skin);  
             }
 
-            // Optionally, display a message if no skins are found and searchTerm is not null
             if (!string.IsNullOrEmpty(searchTerm) && !filteredSkins.Any())
             {
-                MessageBox.Show($"No skins found matching the name: {searchTerm}");
+                MessageBox.Show($"Nie znaleziono skórek o nazwie: {searchTerm}");
             }
         }
 
-
-
-        // Event handler to add a new skin
         private void OnAddNewSkin(object sender, RoutedEventArgs e)
         {
             // Ask for skin name
-            InputWindow nameInputWindow = new InputWindow("Enter skin name:", "Skin Name");
+            InputWindow nameInputWindow = new InputWindow("Wpisz nazwę skina:", "Nazwa skina");
             bool? nameResult = nameInputWindow.ShowDialog();
             string name = null;
             if (nameResult == true)
@@ -239,8 +212,7 @@ namespace ApkaSkiny
                 name = nameInputWindow.UserInput;
             }
 
-            // Ask for collection name
-            InputWindow collectionInputWindow = new InputWindow("Enter collection name:", "Collection Name");
+            InputWindow collectionInputWindow = new InputWindow("Wpisz nazwę kolekcji:", "Nazwa kolekcji");
             bool? collectionResult = collectionInputWindow.ShowDialog();
             string collection = null;
             if (collectionResult == true)
@@ -248,8 +220,7 @@ namespace ApkaSkiny
                 collection = collectionInputWindow.UserInput;
             }
 
-            // Ask for weapon type
-            InputWindow weaponTypeInputWindow = new InputWindow("Enter weapon type:", "Weapon Type");
+            InputWindow weaponTypeInputWindow = new InputWindow("Wpisz typ broni:", "Typ broni");
             bool? weaponTypeResult = weaponTypeInputWindow.ShowDialog();
             string weaponType = null;
             if (weaponTypeResult == true)
@@ -257,23 +228,21 @@ namespace ApkaSkiny
                 weaponType = weaponTypeInputWindow.UserInput;
             }
 
-            // Ask for price
-            InputWindow priceInputWindow = new InputWindow("Enter price of the skin:", "Price");
+            InputWindow priceInputWindow = new InputWindow("Wpisz cenę skina:", "Cena skina");
             bool? priceResult = priceInputWindow.ShowDialog();
             decimal price = 0;
             if (priceResult == true && decimal.TryParse(priceInputWindow.UserInput, out price) && price >= 0)
             {
-                MessageBox.Show("Maximum price cannot be negative. Please enter a valid number.");
+                MessageBox.Show("Cena nie może być ujemna. Wpisz prawidłową liczbę.");
                 return;
             }
             else
             {
-                MessageBox.Show("Invalid price input.");
+                MessageBox.Show("Nieprawidłowa cena.");
                 return;
             }
 
-            // Ask for side (Terrorists, Counter-Terrorists, or Both)
-            InputWindow sideInputWindow = new InputWindow("Enter side (Terrorists, Counter-Terrorists, or Both):", "Side");
+            InputWindow sideInputWindow = new InputWindow("Wpisz stronę (Terroryści, Anty-Terroryści lub Obie):", "Strona");
             bool? sideResult = sideInputWindow.ShowDialog();
             string side = null;
             if (sideResult == true)
@@ -281,8 +250,7 @@ namespace ApkaSkiny
                 side = sideInputWindow.UserInput;
             }
 
-            // Ask for weapon category
-            InputWindow weaponCategoryInputWindow = new InputWindow("Enter weapon category:", "Weapon Category");
+            InputWindow weaponCategoryInputWindow = new InputWindow("Wpisz kategorię broni:", "Kategoria broni");
             bool? weaponCategoryResult = weaponCategoryInputWindow.ShowDialog();
             string weaponCategory = null;
             if (weaponCategoryResult == true)
@@ -290,33 +258,26 @@ namespace ApkaSkiny
                 weaponCategory = weaponCategoryInputWindow.UserInput;
             }
 
-            // Add the new skin to the ViewModel
             _viewModel.AddNewSkin(name, collection, weaponType, price, side, weaponCategory);
         }
 
         private async void OnRemoveSkin(object sender, RoutedEventArgs e)
         {
-            // Synchronizuj dane w ViewModel
-            await _viewModel.DisplaySkinsAsync(); // Załaduj skórki do ViewModel, jeśli jeszcze nie są załadowane
+            await _viewModel.DisplaySkinsAsync();
 
-            // Pobierz wszystkie skiny z ViewModel
             var skins = _viewModel.Skins;
 
-            // Sprawdź, czy lista skinów nie jest pusta
             if (!skins.Any())
             {
                 MessageBox.Show("Brak skórek do usunięcia!", "Informacja", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
 
-            // Przygotowanie listy wyboru w formacie "Name (WeaponType)"
             var skinChoices = skins.Select(s => $"{s.Name} ({s.WeaponType})").ToList();
 
-            // Wywołanie okna dialogowego z wyborem skinu
             var dialog = new SelectSkinDialog("Wybierz skin do usunięcia:", skinChoices);
             if (dialog.ShowDialog() == true)
             {
-                // Rozdzielenie nazwy i typu broni
                 var selectedSkinData = dialog.SelectedSkin?.Split('(');
                 if (selectedSkinData == null || selectedSkinData.Length < 2)
                 {
@@ -326,11 +287,10 @@ namespace ApkaSkiny
 
                 var selectedSkinName = selectedSkinData[0].Trim();
 
-                // Znalezienie wybranego skina
                 var skinToRemove = skins.FirstOrDefault(s => s.Name.Equals(selectedSkinName, StringComparison.OrdinalIgnoreCase));
                 if (skinToRemove != null)
                 {
-                    _viewModel.RemoveSkin(skinToRemove); // Usunięcie z ViewModel
+                    _viewModel.RemoveSkin(skinToRemove);
                     MessageBox.Show($"Skin \"{skinToRemove.Name}\" został usunięty.", "Sukces", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 else
@@ -341,27 +301,20 @@ namespace ApkaSkiny
         }
         private async void OnAddSkinToFavorites(object sender, RoutedEventArgs e)
         {
-            // Synchronizuj dane w ViewModel
-            await _viewModel.DisplaySkinsAsync(); // Załaduj skórki do ViewModel, jeśli jeszcze nie są załadowane
-
-            // Pobierz wszystkie skiny z ViewModel
+            await _viewModel.DisplaySkinsAsync(); 
             var skins = _viewModel.Skins;
 
-            // Sprawdź, czy lista skinów nie jest pusta
             if (!skins.Any())
             {
                 MessageBox.Show("Brak skórek do dodania do ulubionych!", "Informacja", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
 
-            // Przygotowanie listy wyboru w formacie "Name (WeaponType)"
             var skinChoices = skins.Select(s => $"{s.Name} ({s.WeaponType})").ToList();
 
-            // Wywołanie okna dialogowego z wyborem skinu
             var dialog = new SelectSkinDialog("Wybierz skin do dodania do ulubionych:", skinChoices);
             if (dialog.ShowDialog() == true)
             {
-                // Rozdzielenie nazwy i typu broni
                 var selectedSkinData = dialog.SelectedSkin?.Split('(');
                 if (selectedSkinData == null || selectedSkinData.Length < 2)
                 {
@@ -371,12 +324,10 @@ namespace ApkaSkiny
 
                 var selectedSkinName = selectedSkinData[0].Trim();
 
-                // Znalezienie wybranego skina
                 var skinToAdd = skins.FirstOrDefault(s => s.Name.Equals(selectedSkinName, StringComparison.OrdinalIgnoreCase));
                 if (skinToAdd != null)
                 {
-                    // Dodaj skin do ulubionych
-                    _viewModel.AddSkinToFavorites(skinToAdd); // Dodanie skina do ulubionych w ViewModel
+                    _viewModel.AddSkinToFavorites(skinToAdd);
                     MessageBox.Show($"Skin \"{skinToAdd.Name}\" został dodany do ulubionych.", "Sukces", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 else
@@ -388,27 +339,21 @@ namespace ApkaSkiny
 
         private async void OnRemoveSkinFromFavorites(object sender, RoutedEventArgs e)
         {
-            // Synchronizuj dane w ViewModel
-            await _viewModel.DisplayFavoriteSkinsAsync(); // Załaduj ulubione skórki do ViewModel, jeśli jeszcze nie są załadowane
+            await _viewModel.DisplayFavoriteSkinsAsync(); 
 
-            // Pobierz wszystkie ulubione skiny z ViewModel
             var favoriteSkins = _viewModel.Skins.Where(s => s.IsFavorite).ToList();
 
-            // Sprawdź, czy lista ulubionych skinów nie jest pusta
             if (!favoriteSkins.Any())
             {
                 MessageBox.Show("Brak ulubionych skórek do usunięcia!", "Informacja", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
 
-            // Przygotowanie listy wyboru w formacie "Name (WeaponType)"
             var skinChoices = favoriteSkins.Select(s => $"{s.Name} ({s.WeaponType})").ToList();
 
-            // Wywołanie okna dialogowego z wyborem skina
             var dialog = new SelectSkinDialog("Wybierz skin do usunięcia z ulubionych:", skinChoices);
             if (dialog.ShowDialog() == true)
             {
-                // Rozdzielenie nazwy i typu broni
                 var selectedSkinData = dialog.SelectedSkin?.Split('(');
                 if (selectedSkinData == null || selectedSkinData.Length < 2)
                 {
@@ -418,12 +363,10 @@ namespace ApkaSkiny
 
                 var selectedSkinName = selectedSkinData[0].Trim();
 
-                // Znalezienie wybranego skina
                 var skinToRemove = favoriteSkins.FirstOrDefault(s => s.Name.Equals(selectedSkinName, StringComparison.OrdinalIgnoreCase));
                 if (skinToRemove != null)
                 {
-                    // Usuń skin z ulubionych
-                    _viewModel.RemoveSkinFromFavorites(skinToRemove); // Usunięcie skina z ulubionych w ViewModel
+                    _viewModel.RemoveSkinFromFavorites(skinToRemove); 
                     MessageBox.Show($"Skin \"{skinToRemove.Name}\" został usunięty z ulubionych.", "Sukces", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 else
@@ -433,7 +376,6 @@ namespace ApkaSkiny
             }
         }
 
-        // Zamykanie aplikacji
         private void OnExitApp(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
@@ -443,16 +385,15 @@ namespace ApkaSkiny
         {
             if (sender is Button button)
             {
-                button.Background = (SolidColorBrush)FindResource("ButtonHoverColor"); // Lighter pink on hover
+                button.Background = (SolidColorBrush)FindResource("ButtonHoverColor");
             }
         }
 
-        // MouseLeave event to reset background after hover
         private void Button_MouseLeave(object sender, MouseEventArgs e)
         {
             if (sender is Button button)
             {
-                button.Background = (SolidColorBrush)FindResource("ButtonBackgroundColor"); // Reset to original color
+                button.Background = (SolidColorBrush)FindResource("ButtonBackgroundColor");
             }
         }
     }
