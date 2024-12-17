@@ -53,8 +53,7 @@ namespace ApkaSkiny
 
         private void SwitchToTextButton_Click(object sender, RoutedEventArgs e)
         {
-            var view = new SkinView(null); 
-            var controller = new Controller(view);
+            var controller = new Controller(new CLIUI());
             this.Close(); 
             controller.Run();
         }

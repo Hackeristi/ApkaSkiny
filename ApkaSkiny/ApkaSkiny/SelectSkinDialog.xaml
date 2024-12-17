@@ -1,7 +1,8 @@
 ﻿<Window x:Class="ApkaSkiny.SelectSkinDialog"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Wybierz Skin" Height="300" Width="400">
+        Title="Wybierz Skin" Height="300" Width="400"
+		Loaded="Window_Loaded">
 	<Window.Resources>
 		<SolidColorBrush x:Key="PrimaryColor" Color="#D30E92"/>
 		<SolidColorBrush x:Key="SecondaryColor" Color="#FFC0EE"/>

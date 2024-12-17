@@ -103,22 +103,23 @@
         <DataGrid Name="SkinsDataGrid" AutoGenerateColumns="True" Width="550" Height="600" Grid.Row="0" Grid.Column="1" Grid.RowSpan="12" Margin="20,0,0,0"
                   ItemsSource="{Binding Skins}" />
 
-        <Grid Grid.Row="13" Grid.Column="1" Margin="20,10,0,0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-            
-            <TextBlock Text="Średnia cena: " Foreground="White" Grid.Row="0" />
-            <TextBlock Text="{Binding AveragePrice}" Foreground="White" Grid.Row="0" Margin="150,0,0,0"/>
-            
-            <TextBlock Text="Najtańszy skin: " Foreground="White" Grid.Row="1" />
-            <TextBlock Text="{Binding CheapestSkin}" Foreground="White" Grid.Row="1" Margin="150,0,0,0"/>
-            
-            <TextBlock Text="Najdroższy skin: " Foreground="White" Grid.Row="2" />
-            <TextBlock Text="{Binding MostExpensiveSkin}" Foreground="White" Grid.Row="2" Margin="150,0,0,0"/>
-        </Grid>
+		<Grid Grid.Row="13" Grid.Column="1" Margin="20,10,0,0" Visibility="{Binding StatisticsVisibility}">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+			</Grid.RowDefinitions>
 
-    </Grid>
+			<TextBlock Text="Średnia cena: " Foreground="White" Grid.Row="0" />
+			<TextBlock Text="{Binding AveragePrice}" Foreground="White" Grid.Row="0" Margin="150,0,0,0"/>
+
+			<TextBlock Text="Najtańszy skin: " Foreground="White" Grid.Row="1" />
+			<TextBlock Text="{Binding CheapestSkin}" Foreground="White" Grid.Row="1" Margin="150,0,0,0"/>
+
+			<TextBlock Text="Najdroższy skin: " Foreground="White" Grid.Row="2" />
+			<TextBlock Text="{Binding MostExpensiveSkin}" Foreground="White" Grid.Row="2" Margin="150,0,0,0"/>
+		</Grid>
+
+
+	</Grid>
 </Window>

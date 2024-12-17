@@ -7,6 +7,8 @@ using System.Windows.Media;
 using System.Windows.Controls;
 using System.Linq;
 using ApkaSkiny.View;
+using System.Windows.Media.Animation;
+
 namespace ApkaSkiny
 {
     public partial class SelectSkinDialog : Window
@@ -50,6 +52,11 @@ namespace ApkaSkiny
         {
             Button button = (Button)sender;
             button.Background = (SolidColorBrush)Application.Current.Resources["ButtonBackgroundColor"];
+        }
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            var fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.2));
+            this.BeginAnimation(Window.OpacityProperty, fadeInAnimation);
         }
 
     }

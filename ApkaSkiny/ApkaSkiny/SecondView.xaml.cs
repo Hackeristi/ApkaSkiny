@@ -200,66 +200,136 @@ namespace ApkaSkiny
                 MessageBox.Show($"Nie znaleziono skórek o nazwie: {searchTerm}");
             }
         }
-
         private void OnAddNewSkin(object sender, RoutedEventArgs e)
         {
-            // Ask for skin name
-            InputWindow nameInputWindow = new InputWindow("Wpisz nazwę skina:", "Nazwa skina");
-            bool? nameResult = nameInputWindow.ShowDialog();
             string name = null;
-            if (nameResult == true)
+            while (string.IsNullOrEmpty(name))
             {
-                name = nameInputWindow.UserInput;
+                InputWindow nameInputWindow = new InputWindow("Wpisz nazwę skina:", "Nazwa skina");
+                bool? nameResult = nameInputWindow.ShowDialog();
+                if (nameResult == true)
+                {
+                    name = nameInputWindow.UserInput;
+                    if (string.IsNullOrEmpty(name))
+                    {
+                        MessageBox.Show("Nazwa skina nie może być pusta.");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Dodawanie skina zostało anulowane.");
+                    return;
+                }
             }
 
-            InputWindow collectionInputWindow = new InputWindow("Wpisz nazwę kolekcji:", "Nazwa kolekcji");
-            bool? collectionResult = collectionInputWindow.ShowDialog();
             string collection = null;
-            if (collectionResult == true)
+            while (string.IsNullOrEmpty(collection))
             {
-                collection = collectionInputWindow.UserInput;
+                InputWindow collectionInputWindow = new InputWindow("Wpisz nazwę kolekcji:", "Nazwa kolekcji");
+                bool? collectionResult = collectionInputWindow.ShowDialog();
+                if (collectionResult == true)
+                {
+                    collection = collectionInputWindow.UserInput;
+                    if (string.IsNullOrEmpty(collection))
+                    {
+                        MessageBox.Show("Nazwa kolekcji nie może być pusta.");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Dodawanie skina zostało anulowane.");
+                    return;
+                }
             }
 
-            InputWindow weaponTypeInputWindow = new InputWindow("Wpisz typ broni:", "Typ broni");
-            bool? weaponTypeResult = weaponTypeInputWindow.ShowDialog();
             string weaponType = null;
-            if (weaponTypeResult == true)
+            while (string.IsNullOrEmpty(weaponType))
             {
-                weaponType = weaponTypeInputWindow.UserInput;
+                InputWindow weaponTypeInputWindow = new InputWindow("Wpisz typ broni:", "Typ broni");
+                bool? weaponTypeResult = weaponTypeInputWindow.ShowDialog();
+                if (weaponTypeResult == true)
+                {
+                    weaponType = weaponTypeInputWindow.UserInput;
+                    if (string.IsNullOrEmpty(weaponType))
+                    {
+                        MessageBox.Show("Typ broni nie może być pusty.");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Dodawanie skina zostało anulowane.");
+                    return;
+                }
             }
 
-            InputWindow priceInputWindow = new InputWindow("Wpisz cenę skina:", "Cena skina");
-            bool? priceResult = priceInputWindow.ShowDialog();
-            decimal price = 0;
-            if (priceResult == true && decimal.TryParse(priceInputWindow.UserInput, out price) && price >= 0)
+            int price = -1;
+            while (price < 0)
             {
-                MessageBox.Show("Cena nie może być ujemna. Wpisz prawidłową liczbę.");
-                return;
-            }
-            else
-            {
-                MessageBox.Show("Nieprawidłowa cena.");
-                return;
+                InputWindow priceInputWindow = new InputWindow("Wpisz cenę skina:", "Cena skina");
+                bool? priceResult = priceInputWindow.ShowDialog();
+                if (priceResult == true)
+                {
+                    if (int.TryParse(priceInputWindow.UserInput, out price) && price >= 0)
+                    {
+                        // Cena jest poprawna
+                    }
+                    else
+                    {
+                        MessageBox.Show("Podano nieprawidłową cenę. Cena musi być liczbą całkowitą i nie może być ujemna.");
+                        price = -1;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Dodawanie skina zostało anulowane.");
+                    return;
+                }
             }
 
-            InputWindow sideInputWindow = new InputWindow("Wpisz stronę (Terroryści, Anty-Terroryści lub Obie):", "Strona");
-            bool? sideResult = sideInputWindow.ShowDialog();
             string side = null;
-            if (sideResult == true)
+            while (string.IsNullOrEmpty(side))
             {
-                side = sideInputWindow.UserInput;
+                InputWindow sideInputWindow = new InputWindow("Wpisz stronę (Terroryści, Anty-Terroryści lub Obie):", "Strona");
+                bool? sideResult = sideInputWindow.ShowDialog();
+                if (sideResult == true)
+                {
+                    side = sideInputWindow.UserInput;
+                    if (string.IsNullOrEmpty(side))
+                    {
+                        MessageBox.Show("Strona nie może być pusta.");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Dodawanie skina zostało anulowane.");
+                    return;
+                }
             }
 
-            InputWindow weaponCategoryInputWindow = new InputWindow("Wpisz kategorię broni:", "Kategoria broni");
-            bool? weaponCategoryResult = weaponCategoryInputWindow.ShowDialog();
             string weaponCategory = null;
-            if (weaponCategoryResult == true)
+            while (string.IsNullOrEmpty(weaponCategory))
             {
-                weaponCategory = weaponCategoryInputWindow.UserInput;
+                InputWindow weaponCategoryInputWindow = new InputWindow("Wpisz kategorię broni:", "Kategoria broni");
+                bool? weaponCategoryResult = weaponCategoryInputWindow.ShowDialog();
+                if (weaponCategoryResult == true)
+                {
+                    weaponCategory = weaponCategoryInputWindow.UserInput;
+                    if (string.IsNullOrEmpty(weaponCategory))
+                    {
+                        MessageBox.Show("Kategoria broni nie może być pusta.");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Dodawanie skina zostało anulowane.");
+                    return;
+                }
             }
 
             _viewModel.AddNewSkin(name, collection, weaponType, price, side, weaponCategory);
+            MessageBox.Show($"Dodano skina do repozytorium!");
         }
+
 
         private async void OnRemoveSkin(object sender, RoutedEventArgs e)
         {

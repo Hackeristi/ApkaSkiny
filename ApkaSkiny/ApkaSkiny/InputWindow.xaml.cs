@@ -2,6 +2,7 @@
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Controls;
+using System.Windows.Media.Animation;
 
 namespace ApkaSkiny.View
 {
@@ -42,6 +43,11 @@ namespace ApkaSkiny.View
             {
                 button.Background = (SolidColorBrush)Resources["ButtonBackgroundColor"];
             }
+        }
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            var fadeInAnimation = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(0.2));
+            this.BeginAnimation(Window.OpacityProperty, fadeInAnimation);
         }
     }
 }

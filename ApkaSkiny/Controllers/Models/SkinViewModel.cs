@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ApkaSkiny.Models;
 using System.ComponentModel;
+using System.Windows;
 
 namespace ApkaSkiny.ViewModels
 {
@@ -11,7 +12,17 @@ namespace ApkaSkiny.ViewModels
         private SkinRepository _repository;
         private ObservableCollection<Skin> _skins;
         private ObservableCollection<Skin> _favoriteSkins;
+        private Visibility _statisticsVisibility = Visibility.Collapsed;
 
+        public Visibility StatisticsVisibility
+        {
+            get => _statisticsVisibility;
+            set
+            {
+                _statisticsVisibility = value;
+                OnPropertyChanged(nameof(StatisticsVisibility));
+            }
+        }
         public ObservableCollection<Skin> Skins
         {
             get => _skins;
@@ -93,25 +104,29 @@ private string _averagePrice;
         }
     }
 
-    public void DisplayStatistics()
-    {
-        var skins = _repository.GetSkins();
-        if (!skins.Any())
+        public void DisplayStatistics()
         {
-            AveragePrice = "Brak danych";
-            CheapestSkin = "Brak danych";
-            MostExpensiveSkin = "Brak danych";
-            return;
+            var skins = _repository.GetSkins();
+            if (!skins.Any())
+            {
+                AveragePrice = "Brak danych";
+                CheapestSkin = "Brak danych";
+                MostExpensiveSkin = "Brak danych";
+            }
+            else
+            {
+                var avgPrice = skins.Average(s => s.Price);
+                var minPriceSkin = skins.OrderBy(s => s.Price).First();
+                var maxPriceSkin = skins.OrderByDescending(s => s.Price).First();
+
+                AveragePrice = $"${avgPrice:F2}";
+                CheapestSkin = $"{minPriceSkin.Name} - ${minPriceSkin.Price:F2}";
+                MostExpensiveSkin = $"{maxPriceSkin.Name} - ${maxPriceSkin.Price:F2}";
+            }
+
+            // Toggle visibility
+            StatisticsVisibility = StatisticsVisibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
         }
-
-        var avgPrice = skins.Average(s => s.Price);
-        var minPriceSkin = skins.OrderBy(s => s.Price).First();
-        var maxPriceSkin = skins.OrderByDescending(s => s.Price).First();
-
-        AveragePrice = $"${avgPrice:F2}";
-        CheapestSkin = $"{minPriceSkin.Name} - ${minPriceSkin.Price:F2}";
-        MostExpensiveSkin = $"{maxPriceSkin.Name} - ${maxPriceSkin.Price:F2}";
-    }
 
 
         public void AddSkinToFavorites(Skin skin)

@@ -1,7 +1,9 @@
 ﻿<Window x:Class="ApkaSkiny.View.InputWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Input Window" Height="300" Width="400">
+        Title="Input Window" Height="300" Width="500"
+		Loaded="Window_Loaded">
+
 	<Window.Resources>
 		<!-- Defining colors for styling -->
 		<SolidColorBrush x:Key="PrimaryColor" Color="#D30E92"/>
